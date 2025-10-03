@@ -1,9 +1,10 @@
-name: Debug Build Issues
+name: Debug Build Issues (DISABLED)
 
 on:
+  # Disabled - diagnostics complete
   workflow_dispatch:
-  push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
 
 jobs:
   # Test 1: Just check environment

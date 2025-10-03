@@ -1,7 +1,8 @@
-name: Absolute Minimal Test
+name: Absolute Minimal Test (DISABLED)
 
 on:
   workflow_dispatch:
+    # Disabled - test complete
 
 jobs:
   minimal-test:

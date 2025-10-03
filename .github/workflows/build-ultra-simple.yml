@@ -1,8 +1,9 @@
-name: Simple Multi-Platform Build
+name: Simple Multi-Platform Build (DISABLED)
 
 on:
-  push:
-    branches: [ main ]
+  # Disabled - using build-all-platforms-fixed.yml instead
+  # push:
+  #   branches: [ main ]
   workflow_dispatch:
 
 env:
