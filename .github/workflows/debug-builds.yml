@@ -1,0 +1,155 @@
+name: Debug Build Issues
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  # Test 1: Just check environment
+  test-environment:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+    - name: Check environment
+      run: |
+        Write-Host "=== ENVIRONMENT CHECK ==="
+        Write-Host "OS: $env:OS"
+        Write-Host "Architecture: $env:PROCESSOR_ARCHITECTURE"
+        Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"
+        Write-Host "Current Directory: $(Get-Location)"
+        Write-Host "Available Commands:"
+        Get-Command python -ErrorAction SilentlyContinue | Select-Object Name, Version
+        Get-Command pip -ErrorAction SilentlyContinue | Select-Object Name, Version
+        
+    - name: Test Python
+      run: |
+        Write-Host "=== PYTHON TEST ==="
+        python --version
+        python -c "print('Python is working!')"
+        
+    - name: Test pip
+      run: |
+        Write-Host "=== PIP TEST ==="
+        pip --version
+        pip list
+        
+  # Test 2: Try minimal pyinstaller
+  test-pyinstaller:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Test pip install
+      run: |
+        Write-Host "=== INSTALLING PYINSTALLER ==="
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pyinstaller --version
+        
+    - name: Create minimal script
+      run: |
+        Write-Host "=== CREATING TEST SCRIPT ==="
+        echo 'print("Hello from Python!")' > hello.py
+        Get-Content hello.py
+        
+    - name: Test direct pyinstaller
+      run: |
+        Write-Host "=== TESTING PYINSTALLER ==="
+        pyinstaller --version
+        pyinstaller --onefile hello.py
+        Write-Host "=== CHECKING OUTPUT ==="
+        if (Test-Path "dist/hello.exe") {
+          Write-Host "SUCCESS: Executable created!"
+          $size = (Get-Item "dist/hello.exe").Length
+          Write-Host "Size: $size bytes"
+          dir dist/
+        } else {
+          Write-Host "FAILED: No executable found"
+          Write-Host "Contents of current directory:"
+          dir
+          Write-Host "Contents of dist directory (if exists):"
+          if (Test-Path "dist") { dir dist/ } else { Write-Host "No dist directory" }
+          Write-Host "PyInstaller logs:"
+          if (Test-Path "build") { dir build/ -Recurse }
+          exit 1
+        }
+
+  # Test 3: Check if it's a checkout issue
+  test-checkout:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+    - name: Checkout repository  
+      uses: actions/checkout@v4
+      
+    - name: Check repository contents
+      run: |
+        Write-Host "=== REPOSITORY CONTENTS ==="
+        Write-Host "Current directory: $(Get-Location)"
+        Write-Host "Files in root:"
+        dir
+        Write-Host "Files in src/:"
+        if (Test-Path "src/") { dir src/ } else { Write-Host "No src directory" }
+        
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Check if our files exist
+      run: |
+        Write-Host "=== CHECKING OUR FILES ==="
+        if (Test-Path "src/main_simple.py") {
+          Write-Host "✅ main_simple.py exists"
+          Get-Content "src/main_simple.py"
+        } else {
+          Write-Host "❌ main_simple.py NOT FOUND"
+        }
+        
+        if (Test-Path "src/main.py") {
+          Write-Host "✅ main.py exists"
+          Write-Host "First 10 lines:"
+          Get-Content "src/main.py" | Select-Object -First 10
+        } else {
+          Write-Host "❌ main.py NOT FOUND"
+        }
+
+  # Test 4: Linux simple test
+  test-linux-simple:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - name: Check environment
+      run: |
+        echo "=== LINUX ENVIRONMENT ==="
+        uname -a
+        python3 --version
+        pip3 --version
+        
+    - name: Test pyinstaller on Linux
+      run: |
+        echo "=== INSTALLING PYINSTALLER ==="
+        python3 -m pip install --upgrade pip
+        pip3 install pyinstaller
+        
+        echo "=== CREATING TEST SCRIPT ==="
+        echo 'print("Hello from Linux Python!")' > hello.py
+        
+        echo "=== BUILDING ==="
+        pyinstaller --onefile hello.py
+        
+        echo "=== CHECKING RESULT ==="
+        if [ -f "dist/hello" ]; then
+          echo "✅ SUCCESS: Linux executable created!"
+          ls -lh dist/hello
+        else
+          echo "❌ FAILED: No executable found"
+          ls -la
+          if [ -d "dist" ]; then ls -la dist/; fi
+          exit 1
+        fi

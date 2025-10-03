@@ -1,0 +1,30 @@
+name: Absolute Minimal Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  minimal-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Just print something
+      run: echo "Hello World - GitHub Actions is working!"
+      
+    - name: Test Python
+      run: |
+        python3 --version
+        python3 -c "print('Python works!')"
+        
+    - name: Create and upload a file
+      run: |
+        echo "AccessMate Test File" > test.txt
+        echo "Created at: $(date)" >> test.txt
+        cat test.txt
+        
+    - name: Upload test file
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-artifact
+        path: test.txt
+        retention-days: 1
