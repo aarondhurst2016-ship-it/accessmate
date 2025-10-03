@@ -1,0 +1,59 @@
+<!-- Extra manifest permissions for AccessMate accessibility features -->
+<uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+<!-- Audio permissions for speech recognition and TTS -->
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+<!-- Camera permissions for object recognition -->
+<uses-permission android:name="android.permission.CAMERA" />
+
+<!-- Storage permissions for settings and logs -->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+<!-- Location permissions for navigation assistance -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+<!-- Bluetooth permissions for accessibility devices -->
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+<!-- Features declarations -->
+<uses-feature android:name="android.hardware.microphone" android:required="true" />
+<uses-feature android:name="android.hardware.camera" android:required="false" />
+<uses-feature android:name="android.hardware.bluetooth" android:required="false" />
+<uses-feature android:name="android.software.leanback" android:required="false" />
+
+<!-- Accessibility service declaration -->
+<service android:name="com.accessmate.AccessibilityService"
+         android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+         android:exported="true">
+    <intent-filter>
+        <action android:name="android.accessibilityservice.AccessibilityService" />
+    </intent-filter>
+    <meta-data android:name="android.accessibilityservice"
+               android:resource="@xml/accessibility_service_config" />
+</service>
+
+<!-- Boot receiver for auto-start -->
+<receiver android:name="com.accessmate.BootReceiver"
+          android:enabled="true"
+          android:exported="true">
+    <intent-filter android:priority="1000">
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+        <action android:name="android.intent.action.PACKAGE_REPLACED" />
+        <data android:scheme="package" />
+    </intent-filter>
+</receiver>

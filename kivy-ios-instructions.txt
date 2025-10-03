@@ -1,0 +1,27 @@
+# AccessMate iOS Build Instructions (Updated)
+
+## Quick Start (Recommended)
+1. Use the automated build script: `./build_ios.sh`
+2. Open the generated Xcode project: `accessmate-ios/accessmate-ios.xcodeproj`
+3. Configure code signing in Xcode with your Apple Developer account
+4. Build and run on simulator or device
+
+## Manual Build (Advanced)
+1. Install kivy-ios: `pip3 install kivy-ios`
+2. Create iOS project: `kivy-ios create accessmate-ios ios_entry.py`
+3. Build dependencies: `kivy-ios build python3 kivy pillow requests`
+4. Open Xcode project and configure signing
+5. Build and deploy to device
+
+## Documentation
+- See `IOS_BUILD_GUIDE.md` for comprehensive instructions
+- See `ios_config.ini` for configuration options
+- See `build_ios.sh` for automated build process
+
+## Requirements
+- macOS with Xcode installed
+- Apple Developer account (for device testing)
+- Python 3.11+ with kivy-ios
+
+## Note
+This replaces the old toolchain-based approach with a more modern kivy-ios workflow.

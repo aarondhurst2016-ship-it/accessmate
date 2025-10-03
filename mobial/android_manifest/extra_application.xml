@@ -1,0 +1,50 @@
+<!-- Extra application-level configurations for AccessMate -->
+<application android:label="@string/app_name"
+             android:icon="@drawable/icon"
+             android:theme="@style/AccessMateTheme"
+             android:allowBackup="true"
+             android:supportsRtl="true"
+             android:hardwareAccelerated="true"
+             android:largeHeap="true"
+             android:requestLegacyExternalStorage="true">
+
+    <!-- Accessibility service -->
+    <service android:name="com.accessmate.AccessibilityService"
+             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+             android:exported="true"
+             android:enabled="true">
+        <intent-filter>
+            <action android:name="android.accessibilityservice.AccessibilityService" />
+        </intent-filter>
+        <meta-data android:name="android.accessibilityservice"
+                   android:resource="@xml/accessibility_service_config" />
+    </service>
+
+    <!-- Foreground service for background operations -->
+    <service android:name="com.accessmate.AccessMateService"
+             android:exported="false"
+             android:enabled="true"
+             android:foregroundServiceType="mediaPlayback|microphone|camera|location" />
+
+    <!-- Boot receiver -->
+    <receiver android:name="com.accessmate.BootReceiver"
+              android:enabled="true"
+              android:exported="true">
+        <intent-filter android:priority="1000">
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            <action android:name="android.intent.action.PACKAGE_REPLACED" />
+            <data android:scheme="package" />
+        </intent-filter>
+    </receiver>
+
+    <!-- File provider for sharing files -->
+    <provider android:name="androidx.core.content.FileProvider"
+              android:authorities="com.accessmate.fileprovider"
+              android:exported="false"
+              android:grantUriPermissions="true">
+        <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                   android:resource="@xml/file_paths" />
+    </provider>
+
+</application>

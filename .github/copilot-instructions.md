@@ -1,0 +1,31 @@
+# Copilot Instructions for Talkback Assistant
+
+- Scaffolded as a modular Python project for accessibility, speech, and integrations.
+- All main modules are in `src/`.
+- Dependencies listed in `requirements.txt`:
+    - kivy
+    - gtts
+    - pygame
+    - speechrecognition
+    - requests
+    - beautifulsoup4
+    - sounddevice
+    - twilio
+    - fpdf
+    - pywinauto
+    - cython
+    - buildozer
+    - kivy-ios
+    - tkinter
+    - pillow
+    - pyttsx3
+    - pyaudio
+    - numpy
+    - matplotlib
+    - scipy
+    - pandas
+    - openpyxl
+    - xlrd
+    - pyinstaller
+- Build instructions for Windows using PyInstaller are in `README.md`.
+- Update this file as you add new features or modules.

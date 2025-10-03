@@ -1,0 +1,14 @@
+[
+  {"type": "coat", "name": "Blue Winter Coat", "warmth": "heavy", "rainproof": true, "color": "blue", "occasion": "formal", "style": "fitted"},
+  {"type": "jacket", "name": "Grey Hoodie", "warmth": "medium", "rainproof": false, "color": "grey", "occasion": "casual", "style": "relaxed"},
+  {"type": "sweater", "name": "Red Sweater", "warmth": "medium", "rainproof": false, "color": "red", "occasion": "casual", "style": "classic"},
+  {"type": "shirt", "name": "White T-Shirt", "warmth": "light", "rainproof": false, "color": "white", "occasion": "casual", "style": "regular"},
+  {"type": "pants", "name": "Black Jeans", "warmth": "medium", "rainproof": false, "color": "black", "occasion": "casual", "style": "straight"},
+  {"type": "shorts", "name": "Blue Shorts", "warmth": "light", "rainproof": false, "color": "blue", "occasion": "casual", "style": "regular"},
+  {"type": "boots", "name": "Snow Boots", "warmth": "heavy", "rainproof": true, "color": "black", "occasion": "outdoor", "style": "structured"},
+  {"type": "shoes", "name": "Sneakers", "warmth": "light", "rainproof": false, "color": "white", "occasion": "casual", "style": "regular"},
+  {"type": "umbrella", "name": "Compact Umbrella", "warmth": "none", "rainproof": true, "color": "black", "occasion": "outdoor", "style": "none"},
+  {"type": "scarf", "name": "Wool Scarf", "warmth": "heavy", "rainproof": false, "color": "grey", "occasion": "formal", "style": "flowy"},
+  {"type": "gloves", "name": "Leather Gloves", "warmth": "heavy", "rainproof": false, "color": "black", "occasion": "formal", "style": "fitted"},
+  {"type": "sunglasses", "name": "Black Sunglasses", "warmth": "none", "rainproof": false, "color": "black", "occasion": "outdoor", "style": "none"}
+]

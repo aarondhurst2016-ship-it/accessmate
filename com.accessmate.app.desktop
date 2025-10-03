@@ -1,0 +1,23 @@
+[Desktop Entry]
+Name=AccessMate
+Comment=Accessible Talkback Assistant for Linux
+GenericName=Accessibility Assistant
+Exec=accessmate
+Icon=com.accessmate.app
+Type=Application
+Categories=Accessibility;Utility;AudioVideo;
+Keywords=accessibility;talkback;speech;assistant;screen-reader;voice;
+StartupNotify=true
+StartupWMClass=AccessMate
+MimeType=text/plain;audio/wav;audio/mp3;
+Actions=QuickSpeak;Settings;
+
+[Desktop Action QuickSpeak]
+Name=Quick Speak
+Icon=com.accessmate.app
+Exec=accessmate --quick-speak
+
+[Desktop Action Settings]
+Name=Settings
+Icon=preferences-system
+Exec=accessmate --settings

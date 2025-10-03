@@ -1,0 +1,12 @@
+Talkback Assistant Accessibility Information
+
+- Fully screen reader compatible (desktop and mobile)
+- High contrast and large font options available
+- Keyboard navigation and focus highlighting
+- Speech feedback for all major actions and errors
+- Accessible error handling: all errors are spoken and displayed
+- Tooltips and help sheet for all controls
+- Voice command and speech-to-text input supported
+- Customizable accessibility profiles
+
+For support or suggestions, contact: support@talkbackassistant.com

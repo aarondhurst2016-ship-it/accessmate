@@ -1,0 +1,59 @@
+# Build artifacts and large files
+build/
+dist/
+Output/
+*.exe
+*.pkg
+*.app
+*.dmg
+*.deb
+*.rpm
+*.apk
+*.aab
+*.ipa
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+error.log
+
+# Temporary files
+temp_*
+*.tmp
+*.temp
+
+# User settings that shouldn't be shared
+user_settings.json
+settings.json
+
+# Large media files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.mp3
+*.wav
+*.flac
