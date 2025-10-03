@@ -1,0 +1,45 @@
+
+name: accessmate
+version: '1.0.0'
+summary: AI accessibility assistant with voice commands and object recognition
+description: |
+  AI-powered accessibility assistant providing vision, hearing, and mobility support with voice commands, object recognition, and screen reading capabilities.
+  
+  Key Features:
+  - Voice commands and speech recognition
+  - Object recognition and identification
+  - Screen reader functionality
+  - Battery monitoring with alerts
+  - Emergency SOS features
+  - Smart home integration
+  - Navigation assistance
+  - Medication reminders
+
+grade: stable
+confinement: strict
+base: core22
+
+apps:
+  accessmate:
+    command: bin/accessmate
+    plugs:
+      - home
+      - network
+      - audio-playback
+      - audio-record
+      - camera
+      - desktop
+      - desktop-legacy
+      - wayland
+      - x11
+      - unity7
+
+parts:
+  accessmate:
+    plugin: dump
+    source: ../../dist/
+    organize:
+      accessmate: bin/accessmate
+    stage-packages:
+      - libgtk-3-0
+      - libgstreamer1.0-0

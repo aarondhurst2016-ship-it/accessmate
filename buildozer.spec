@@ -38,15 +38,32 @@ version = 1.0.0
 # comma separated e.g. requirements = sqlite3,kivy
 requirements = python3,kivy,pillow,requests,plyer,pyjnius,android,kivymd
 
+# (str) Bootstrap to use for android builds
+# android.bootstrap = sdl2
+
+# (bool) Indicate if the application should be fullscreen or not
+autofullscreen = 0
+
+# (str) Android entry point, default is ok for Kivy-based app
+# android.entrypoint = org.kivy.android.PythonActivity
+
+# (list) Pattern to whitelist for the whole project
+# android.whitelist =
+
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/accessmate_logo.png
+presplash.filename = %(source.dir)s/android_icon.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/accessmate_logo.png
+icon.filename = %(source.dir)s/android_icon.png
+
+# (str) Android specific
+# Use the generated Android icons (buildozer will copy them automatically)
+# android.add_src = android_icons
+# android.add_aars = android_icons/playstore/ic_launcher.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
@@ -376,3 +393,5 @@ build_dir = ./.buildozer
 
 # (str) Path to build output (i.e. .apk, .aab, .ipa) storage
 bin_dir = ./bin
+
+# Android specific configurations for better icon support

@@ -1,0 +1,8 @@
+{
+  "demo_account": {
+    "username": "demo@accessmate.app",
+    "password": "DemoUser2025!"
+  },
+  "review_notes": "AccessMate is an accessibility-focused application designed to help users with disabilities.\n\nTESTING INSTRUCTIONS:\n1. Enable VoiceOver to test screen reader integration\n2. Try voice commands: \"What do you see?\", \"Read this screen\", \"Check battery\"\n3. Test object recognition by pointing camera at objects\n4. Emergency features can be tested safely in demo mode\n\nACCESSIBILITY COMPLIANCE:\n- Full VoiceOver support\n- High contrast mode compatibility  \n- Large text support\n- Voice control integration\n- Switch control compatibility\n\nThe app requests camera and microphone permissions for core accessibility features (object recognition and voice commands).",
+  "testing_notes": "App includes comprehensive accessibility features. Please test with VoiceOver enabled for full experience."
+}

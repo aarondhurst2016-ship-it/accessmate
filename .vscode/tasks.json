@@ -1,157 +1,129 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "Build Talkback Assistant (PyInstaller)",
-			"type": "shell",
-			"command": "pyinstaller --onefile --name TalkbackAssistantWin src/main.py",
-			"isBackground": false,
-			"problemMatcher": [
-				"$python"
-			],
-			"group": "build"
-		},
-		{
-			"label": "Build Talkback Assistant (PyInstaller)",
-			"type": "shell",
-			"command": "\"C:/Program Files/Python311/python.exe\" -m PyInstaller --onefile --name TalkbackAssistantWin src/main.py",
-			"isBackground": false,
-			"problemMatcher": [
-				"$python"
-			],
-			"group": "build"
-		},
-		{
-			"label": "Build Talkback Assistant (PyInstaller)",
-			"type": "shell",
-			"command": "pyinstaller --clean --noconfirm --onefile --windowed --name TalkbackAssistantWin src\\main.py --specpath . --distpath build\\TalkbackAssistantWin --workpath build\\TalkbackAssistantWin\\localpycs --add-data \"src;src\"",
-			"args": [],
-			"problemMatcher": [
-				"$python"
-			],
-			"group": "build"
-		},
-		{
-			"label": "Build Talkback Assistant (PyInstaller)",
-			"type": "shell",
-			"command": "\"C:/Program Files/Python311/Scripts/pyinstaller.exe\" --clean --noconfirm --onefile --windowed --name TalkbackAssistantWin src\\main.py --specpath . --distpath build\\TalkbackAssistantWin --workpath build\\TalkbackAssistantWin\\localpycs --add-data \"src;src\"",
-			"args": [],
-			"problemMatcher": [
-				"$python"
-			],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "pyinstaller --onefile --windowed src/main.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "\"C:/Program Files/Python311/Scripts/pyinstaller.exe\" --onefile --windowed src/main.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "pyinstaller",
-			"args": [
-				"--onefile",
-				"--windowed",
-				"src/main.py"
-			],
-			"problemMatcher": [
-				"$msCompile"
-			],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "pyinstaller",
-			"args": [
-				"--onefile",
-				"--windowed",
-				"src/main.py",
-				"--name",
-				"TalkbackAssistantWin"
-			],
-			"problemMatcher": [
-				"$msCompile"
-			],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "pyinstaller --onefile --windowed src\\gui.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "pyinstaller --onefile --windowed src\\gui.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "python -m PyInstaller --onefile --windowed src\\gui.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "python -m PyInstaller --onefile --windowed src\\gui.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "python -m PyInstaller --onefile --windowed src\\gui.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Windows Executable",
-			"type": "shell",
-			"command": "python -m PyInstaller --onefile --windowed src\\gui.py --name TalkbackAssistantWin",
-			"args": [],
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "Build Support Admin Tool (PyInstaller)",
-			"type": "shell",
-			"command": "pyinstaller --onefile --windowed --name support_admin-tool support_admin_tool.py",
-			"group": "build"
-		},
-		{
-			"label": "Build Support Admin Tool (PyInstaller)",
-			"type": "shell",
-			"command": "pyinstaller --onefile --windowed --name support_admin-tool support_admin_tool.py",
-			"group": "build"
-		},
-		{
-			"label": "Build Support Admin Tool (PyInstaller Full Path)",
-			"type": "shell",
-			"command": "\"C:/Program Files/Python311/Scripts/pyinstaller.exe\" --onefile --windowed --name support_admin-tool support_admin_tool.py",
-			"group": "build"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build AccessMate Windows",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "build_windows.py"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Build Windows executable with icon"
+    },
+    {
+      "label": "Build AccessMate macOS",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "build_macos.py"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Build macOS app bundle with icon"
+    },
+    {
+      "label": "Build AccessMate Linux",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "build_linux.py"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Build Linux executable with desktop integration"
+    },
+    {
+      "label": "Build AccessMate Android",
+      "type": "shell",
+      "command": "buildozer",
+      "args": [
+        "android",
+        "debug"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Build Android APK with icon"
+    },
+    {
+      "label": "Build AccessMate iOS",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "build_ios.py"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Build iOS app with icon (requires macOS)"
+    },
+    {
+      "label": "Build All Platforms",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "build_all_platforms.py",
+        "all"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Build AccessMate for all supported platforms"
+    },
+    {
+      "label": "Setup Icons",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "setup_icons.py"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Generate and setup icons for all platforms"
+    }
+  ]
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.accessmate.app</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <name>AccessMate</name>
+  <summary>AI accessibility assistant with voice commands and object recognition</summary>
+  <description>
+    <p>AI-powered accessibility assistant providing vision, hearing, and mobility support with voice commands, object recognition, and screen reading capabilities.</p>
+    <p>Features include voice commands, object recognition, screen reading, battery monitoring, emergency SOS, smart home integration, and navigation assistance.</p>
+  </description>
+  <launchable type="desktop-id">com.accessmate.app.desktop</launchable>
+  <url type="homepage">https://accessmate.app</url>
+  <developer_name>AccessMate Team</developer_name>
+  <provides>
+    <binary>accessmate</binary>
+  </provides>
+  <categories>
+    <category>Accessibility</category>
+    <category>Utility</category>
+  </categories>
+  <keywords>
+    <keyword>accessibility</keyword>
+    <keyword>voice</keyword>
+    <keyword>vision</keyword>
+    <keyword>hearing</keyword>
+    <keyword>screen-reader</keyword>
+  </keywords>
+  <screenshots>
+    <screenshot type="default">
+      <caption>AccessMate main interface</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.0.0" date="2025-10-03">
+      <description>
+        <p>Initial release of AccessMate with full accessibility features.</p>
+      </description>
+    </release>
+  </releases>
+</component>

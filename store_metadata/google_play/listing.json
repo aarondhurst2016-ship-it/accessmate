@@ -1,0 +1,19 @@
+{
+  "title": "AccessMate",
+  "short_description": "AI accessibility assistant with voice commands and object recognition",
+  "full_description": "AI-powered accessibility assistant providing vision, hearing, and mobility support with voice commands, object recognition, and screen reading capabilities.\n\nKEY FEATURES:\n\u2022 Voice commands and speech recognition\n\u2022 Object recognition and identification  \n\u2022 Screen reader for visual accessibility\n\u2022 Battery monitoring with voice notifications\n\u2022 Emergency SOS features\n\u2022 Smart home integration\n\u2022 Navigation assistance\n\u2022 Medication reminders\n\u2022 Weather and news updates\n\u2022 Customizable accessibility profiles\n\nACCESSIBILITY SUPPORT:\n\u2022 Vision impairment assistance\n\u2022 Hearing impairment support  \n\u2022 Mobility assistance features\n\u2022 Cognitive accessibility tools\n\u2022 Voice-first interface design\n\u2022 High contrast visual themes\n\u2022 Large text and button options\n\u2022 Screen reader compatibility\n\nPRIVACY & SECURITY:\n\u2022 Local processing where possible\n\u2022 Encrypted data transmission\n\u2022 No unnecessary data collection\n\u2022 Full privacy policy compliance\n\u2022 User control over all permissions\n\nPerfect for users with disabilities, elderly users, or anyone who benefits from voice-controlled accessibility features.",
+  "category": "ACCESSIBILITY",
+  "content_rating": "Everyone",
+  "tags": [
+    "accessibility",
+    "vision",
+    "hearing",
+    "mobility",
+    "AI",
+    "voice",
+    "screen reader"
+  ],
+  "contact_email": "support@accessmate.app",
+  "privacy_policy_url": "https://accessmate.app/privacy",
+  "website_url": "https://accessmate.app"
+}

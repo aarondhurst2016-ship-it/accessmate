@@ -1,0 +1,29 @@
+{
+  "CFBundleName": "AccessMate",
+  "CFBundleDisplayName": "AccessMate",
+  "CFBundleIdentifier": "com.accessmate.app",
+  "CFBundleVersion": "1.0.0",
+  "CFBundleShortVersionString": "1.0.0",
+  "CFBundlePackageType": "APPL",
+  "CFBundleExecutable": "AccessMate",
+  "CFBundleIconName": "AppIcon",
+  "LSRequiresIPhoneOS": true,
+  "UILaunchStoryboardName": "LaunchScreen",
+  "UISupportedInterfaceOrientations": [
+    "UIInterfaceOrientationPortrait",
+    "UIInterfaceOrientationLandscapeLeft",
+    "UIInterfaceOrientationLandscapeRight"
+  ],
+  "NSMicrophoneUsageDescription": "AccessMate needs microphone access for voice commands",
+  "NSCameraUsageDescription": "AccessMate needs camera access for object recognition",
+  "NSLocationWhenInUseUsageDescription": "AccessMate needs location for navigation assistance",
+  "NSMotionUsageDescription": "AccessMate needs motion sensors for accessibility features",
+  "UIBackgroundModes": [
+    "audio",
+    "background-processing"
+  ],
+  "UIRequiredDeviceCapabilities": [
+    "armv7"
+  ],
+  "UIStatusBarStyle": "UIStatusBarStyleDefault"
+}

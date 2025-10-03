@@ -1,0 +1,28 @@
+{
+  "display_name": "AccessMate",
+  "description": "AI-powered accessibility assistant providing vision, hearing, and mobility support with voice commands, object recognition, and screen reading capabilities.\n\n\ud83c\udfaf KEY ACCESSIBILITY FEATURES:\n\u2022 Voice-First Interface: Complete voice command system\n\u2022 Smart Screen Reader: Advanced text-to-speech with customization\n\u2022 Object Recognition: AI-powered visual assistance\n\u2022 Battery Alerts: Voice notifications for power management\n\u2022 Emergency SOS: Quick access to emergency services\n\u2022 Smart Home Control: Voice control for connected devices\n\u2022 Navigation Help: GPS assistance with voice guidance\n\u2022 Medication Reminders: Voice alerts for health management\n\n\ud83c\udf1f WINDOWS INTEGRATION:\n\u2022 Narrator compatibility and enhancement\n\u2022 Windows Hello integration\n\u2022 Cortana voice command extension\n\u2022 High contrast theme support\n\u2022 Windows accessibility API integration\n\u2022 Keyboard shortcut customization\n\n\ud83d\udc65 PERFECT FOR:\n\u2022 Users with visual impairments\n\u2022 People with hearing difficulties  \n\u2022 Individuals with mobility challenges\n\u2022 Elderly users seeking independence\n\u2022 Anyone preferring voice interfaces\n\u2022 Caregivers and family members\n\n\ud83d\udd12 PRIVACY & SECURITY:\n\u2022 Local data processing when possible\n\u2022 Encrypted communications\n\u2022 No unnecessary data collection\n\u2022 Full GDPR compliance\n\u2022 User-controlled permissions",
+  "category": "Accessibility",
+  "age_rating": "Everyone",
+  "features": [
+    "Voice commands",
+    "Screen reading",
+    "Object recognition",
+    "Emergency assistance",
+    "Smart home integration",
+    "Accessibility tools"
+  ],
+  "system_requirements": {
+    "minimum": {
+      "os": "Windows 10 version 19041.0 or higher",
+      "architecture": "x64, x86, ARM64",
+      "memory": "4 GB RAM",
+      "storage": "500 MB available space"
+    },
+    "recommended": {
+      "os": "Windows 11",
+      "memory": "8 GB RAM",
+      "storage": "1 GB available space",
+      "additional": "Microphone and camera for full functionality"
+    }
+  }
+}

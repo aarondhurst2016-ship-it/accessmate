@@ -1,0 +1,15 @@
+{
+  "name": "AccessMate",
+  "category": "Medical",
+  "description": "AI-powered accessibility assistant providing vision, hearing, and mobility support with voice commands, object recognition, and screen reading capabilities.\n\n\ud83c\udfaf MACOS OPTIMIZED FEATURES:\n\u2022 Native VoiceOver enhancement and integration\n\u2022 Siri Shortcuts for quick accessibility commands\n\u2022 Touch Bar support for MacBook Pro users\n\u2022 macOS accessibility API integration\n\u2022 System-wide voice commands\n\u2022 Menu bar quick access\n\u2022 Multi-desktop support\n\n\ud83c\udf1f ACCESSIBILITY EXCELLENCE:\n\u2022 Advanced screen reading with customizable voices\n\u2022 AI-powered object recognition through camera\n\u2022 Voice-controlled smart home integration  \n\u2022 Battery monitoring with spoken alerts\n\u2022 Emergency SOS with location services\n\u2022 Medication reminders with voice notifications\n\u2022 Weather and news updates via speech\n\n\ud83d\udd27 SYSTEM INTEGRATION:\n\u2022 Works seamlessly with existing macOS accessibility features\n\u2022 Respects system accessibility preferences\n\u2022 Integrates with Notification Center\n\u2022 Supports Dark Mode and high contrast themes\n\u2022 Keyboard navigation and shortcuts\n\u2022 Multi-language support\n\nPerfect for Mac users who need enhanced accessibility features or prefer voice-controlled interfaces.",
+  "age_rating": "4+",
+  "version": "1.0.0",
+  "system_requirements": {
+    "minimum_os": "macOS 10.15",
+    "recommended_os": "macOS 12.0 or later",
+    "architecture": [
+      "x86_64",
+      "arm64"
+    ]
+  }
+}

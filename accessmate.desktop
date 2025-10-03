@@ -1,0 +1,24 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AccessMate
+GenericName=Accessibility Assistant
+Comment=AI-powered accessibility assistant for vision, hearing, and mobility support
+Keywords=accessibility;speech;vision;assistant;
+Exec=accessmate
+Icon=accessmate
+Terminal=false
+Categories=Accessibility;Utility;AudioVideo;
+StartupNotify=true
+MimeType=text/plain;audio/mpeg;image/png;image/jpeg;
+StartupWMClass=AccessMate
+
+[Desktop Action Settings]
+Name=Settings
+Exec=accessmate --settings
+Icon=accessmate
+
+[Desktop Action Emergency]
+Name=Emergency SOS
+Exec=accessmate --emergency
+Icon=accessmate
