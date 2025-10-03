@@ -1,4 +1,0 @@
-To enable auto-start on Windows:
-1. Press Win+R and type shell:startup
-2. Place a shortcut to your app in the Startup folder.
-Your app will now launch automatically when Windows starts.

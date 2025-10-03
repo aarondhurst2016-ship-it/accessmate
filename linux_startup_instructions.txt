@@ -1,8 +1,0 @@
-To enable auto-start on Linux:
-1. Create a .desktop file for your app in ~/.config/autostart/
-2. Example .desktop file:
-[Desktop Entry]
-Type=Application
-Exec=/path/to/your/app
-Name=Talkback Assistant
-Your app will now launch automatically when Linux starts.

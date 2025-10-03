@@ -1,4 +1,0 @@
-To enable auto-start on macOS:
-1. Open System Preferences > Users & Groups > Login Items
-2. Add your app to the list.
-Your app will now launch automatically when macOS starts.
