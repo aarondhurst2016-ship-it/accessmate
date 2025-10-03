@@ -246,7 +246,7 @@ jobs:
         fi
     
     - name: Upload APK artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: success()
       with:
         name: android-apk-${{ github.run_number }}
@@ -254,7 +254,7 @@ jobs:
         retention-days: 30
     
     - name: Upload build logs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: build-logs-${{ github.run_number }}
