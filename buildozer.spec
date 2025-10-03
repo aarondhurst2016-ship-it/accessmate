@@ -10,7 +10,7 @@ package.name = accessmate
 package.domain = com.accessmate
 
 # (str) Source code where the main.py live
-source.dir = mobial
+source.dir = src
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,txt,json,wav,mp3
@@ -43,10 +43,10 @@ requirements = python3,kivy,pillow,requests,plyer,pyjnius,android,kivymd
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/assets/presplash.png
+presplash.filename = %(source.dir)s/accessmate_logo.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/assets/icon.png
+icon.filename = %(source.dir)s/accessmate_logo.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait

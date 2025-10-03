@@ -59,9 +59,11 @@ def set_startup(enable=True):
 if __name__ == "__main__":  # Fixed: was **name** now __name__
     import sys
     import subprocess
-    # Start the global screen reader in the background
+    # Start the global screen reader in the background (if available)
     try:
-        subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__), "..", "global_screen_reader.py")])
+        global_reader_path = os.path.join(os.path.dirname(__file__), "universal_screen_reader.py")
+        if os.path.exists(global_reader_path):
+            subprocess.Popen([sys.executable, global_reader_path])
     except Exception as e:
         print(f"[WARN] Could not start global screen reader: {e}")
     # Enable app to start on Windows startup

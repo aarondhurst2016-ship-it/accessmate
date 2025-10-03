@@ -1245,16 +1245,20 @@ import time
 
 # Safe import of accessibility module
 try:
-    from accessibility import enable_accessibility
+    from accessibility_module import enable_accessibility
     ACCESSIBILITY_AVAILABLE = True
 except ImportError:
-    print("Warning: accessibility module not found. Accessibility features will be disabled.")
-    ACCESSIBILITY_AVAILABLE = False
-
-# Always define enable_accessibility at module level
-def enable_accessibility(widget, tooltip=None):
-    """Dummy function when accessibility module is not available."""
-    pass
+    try:
+        from accessibility import enable_accessibility
+        ACCESSIBILITY_AVAILABLE = True
+    except ImportError:
+        print("Warning: accessibility module not found. Accessibility features will be disabled.")
+        ACCESSIBILITY_AVAILABLE = False
+        
+        # Define dummy function when accessibility module is not available
+        def enable_accessibility(widget, tooltip=None):
+            """Dummy function when accessibility module is not available."""
+            pass
 
 import speech
 
