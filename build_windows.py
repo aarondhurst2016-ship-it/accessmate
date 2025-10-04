@@ -1,12 +1,58 @@
 ﻿# AccessMate Windows Executable Build Script
-# This script creates a Windows executable with proper icon
+# This script creates a Windows executable with proper icon and metadata
 
 import PyInstaller.__main__
 import sys
 import os
+import tempfile
+
+def create_version_info():
+    """Create version info file for Windows executable"""
+    version_info = """
+# UTF-8
+#
+# For more details about fixed file info 'ffi' see:
+# http://msdn.microsoft.com/en-us/library/ms646997.aspx
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1,0,0,0),
+    prodvers=(1,0,0,0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+    ),
+  kids=[
+    StringFileInfo(
+      [
+      StringTable(
+        u'040904B0',
+        [StringStruct(u'CompanyName', u'AccessMate Team'),
+        StringStruct(u'FileDescription', u'AccessMate - Accessibility Assistant'),
+        StringStruct(u'FileVersion', u'1.0.0.0'),
+        StringStruct(u'InternalName', u'AccessMate'),
+        StringStruct(u'LegalCopyright', u'Copyright © 2025 AccessMate Team'),
+        StringStruct(u'OriginalFilename', u'AccessMate.exe'),
+        StringStruct(u'ProductName', u'AccessMate'),
+        StringStruct(u'ProductVersion', u'1.0.0.0')])
+      ]), 
+    VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
+  ]
+)
+"""
+    
+    # Write version info to temporary file
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False, encoding='utf-8') as f:
+        f.write(version_info)
+        return f.name
 
 def build_windows_exe():
-    """Build Windows executable with proper configuration"""
+    """Build Windows executable with proper configuration and metadata"""
+    
+    # Get version info file
+    version_file = create_version_info()
     
     # Get the directory containing this script
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -31,6 +77,8 @@ def build_windows_exe():
         "--name=AccessMate",   # Executable name
         "--clean",             # Clean build
         "--noconfirm",         # Don't ask for confirmation
+        f"--version-file={version_file}",  # Add version info for Windows
+        "--uac-admin",         # Request admin privileges if needed for accessibility
     ]
     
     # Add icon if available
@@ -77,11 +125,21 @@ def build_windows_exe():
     
     try:
         PyInstaller.__main__.run(args)
-        print(f"\nBuild completed! Check the 'dist' folder for AccessMate.exe")
+        print("\n✅ Windows executable built successfully!")
+        print("📁 Output: dist/AccessMate.exe")
+        print("🛡️ Includes version info for better Windows security recognition")
+        print("⚠️  Note: Smart App Control may still block unsigned executables")
+        print("📖 See SMART_APP_CONTROL_SOLUTION.md for bypass instructions")
         return True
     except Exception as e:
-        print(f"\nBuild failed: {e}")
+        print(f"\n❌ Build failed: {e}")
         return False
+    finally:
+        # Clean up temporary version file
+        try:
+            os.unlink(version_file)
+        except:
+            pass
 
 if __name__ == "__main__":
     print("AccessMate Windows Build Script")
