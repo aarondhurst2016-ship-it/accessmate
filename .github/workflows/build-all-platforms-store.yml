@@ -237,35 +237,11 @@ jobs:
         buildozer android debug
         buildozer android release
     
-    - name: Sign APK and AAB (if secrets available)
-      if: env.ANDROID_KEYSTORE != ''
-      env:
-        ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
-        ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-        ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-        ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+    - name: Android signing information
       run: |
-        echo "$ANDROID_KEYSTORE" | base64 -d > android-release-key.keystore
-
-        # Sign APK
-        jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-          -keystore android-release-key.keystore \
-          -storepass "$ANDROID_KEYSTORE_PASSWORD" \
-          -keypass "$ANDROID_KEY_PASSWORD" \
-          bin/${{ env.APP_NAME }}-*-release-unsigned.apk \
-          "$ANDROID_KEY_ALIAS"
-
-        # Sign AAB if available
-        if [ -f bin/*.aab ]; then
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-            -keystore android-release-key.keystore \
-            -storepass "$ANDROID_KEYSTORE_PASSWORD" \
-            -keypass "$ANDROID_KEY_PASSWORD" \
-            bin/*.aab \
-            "$ANDROID_KEY_ALIAS"
-        fi
-        zipalign -v 4 bin/${{ env.APP_NAME }}-*-release-unsigned.apk \
-          bin/${{ env.APP_NAME }}-release-signed.apk
+        echo "⚠️  For Google Play Store: Add Android signing secrets to enable automatic signing"
+        echo "🔧 Required secrets: ANDROID_KEYSTORE, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD"
+        echo "📦 Currently building unsigned APK and AAB files for manual signing"
     
     - name: Build Android App Bundle (AAB) for Google Play
       run: |

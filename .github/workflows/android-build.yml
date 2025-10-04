@@ -67,9 +67,7 @@ jobs:
           xz-utils \
           tk-dev \
           libxml2-dev \
-          libxmlsec1-dev \
-          libffi-dev \
-          liblzma-dev
+          libxmlsec1-dev
     
     - name: Cache buildozer global directory
       uses: actions/cache@v3
@@ -102,7 +100,6 @@ jobs:
           exit 1
         fi
         
-        # Check required files exist
         if [ ! -d src ]; then
           echo "ERROR: src/ directory not found!"
           exit 1
@@ -113,7 +110,6 @@ jobs:
           exit 1
         fi
         
-        # Check icon files exist
         if [ ! -f src/android_icon.png ]; then
           echo "ERROR: src/android_icon.png not found!"
           exit 1
@@ -124,7 +120,6 @@ jobs:
           exit 1
         fi
         
-        # Verify Android icon structure
         for density in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
           if [ ! -f "android_icons/mipmap-$density/ic_launcher.png" ]; then
             echo "WARNING: android_icons/mipmap-$density/ic_launcher.png not found!"
@@ -138,12 +133,9 @@ jobs:
     - name: Prepare build environment
       run: |
         echo "Setting up build environment..."
-        
-        # Create necessary directories
         mkdir -p ~/.buildozer
         mkdir -p .buildozer
         
-        # Set environment variables for buildozer
         export ANDROIDAPI="34"
         export NDKAPI="21"
         export ANDROID_HOME="$HOME/.buildozer/android/platform/android-sdk"
@@ -158,7 +150,6 @@ jobs:
         echo "[BUILD] Building DEBUG APK..."
         buildozer android debug
         
-        # Verify APK was created
         if [ -f bin/*.apk ]; then
           echo "[SUCCESS] DEBUG APK build successful!"
           ls -la bin/*.apk
@@ -170,39 +161,15 @@ jobs:
     - name: Build Android APK (Release)
       if: github.event.inputs.build_type == 'release'
       run: |
-        echo "[BUILD] Building RELEASE APK..."
+        echo "[BUILD] Building unsigned RELEASE APK..."
+        echo "[INFO] For Google Play Store signed builds, add GitHub repository secrets:"
+        echo "  ANDROID_KEYSTORE, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD"
+        echo "[INFO] Current build creates unsigned APK suitable for manual signing"
         
-        # Check if signing secrets are available
-        if [ -n "${{ secrets.ANDROID_KEYSTORE }}" ] && [ -n "${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" ]; then
-          echo "[SIGNED] Building signed release APK"
-          
-          # Configure keystore for signing
-          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 -d > android-release-key.keystore
-          
-          # Create signing configuration
-          echo "" >> buildozer.spec
-          echo "android.release_artifact = aab" >> buildozer.spec
-          echo "android.debug_artifact = apk" >> buildozer.spec
-          echo "android.keystore = android-release-key.keystore" >> buildozer.spec
-          echo "android.keyalias = ${{ secrets.ANDROID_KEY_ALIAS }}" >> buildozer.spec
-          echo "android.keystorepass = ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> buildozer.spec
-          echo "android.keypass = ${{ secrets.ANDROID_KEY_PASSWORD }}" >> buildozer.spec
-          
-          buildozer android release
-        else
-          echo "[WARN] No signing secrets configured, building unsigned release"
-          echo "[INFO] To enable signed releases, add these GitHub secrets:"
-          echo "   - ANDROID_KEYSTORE (base64 encoded keystore file)"
-          echo "   - ANDROID_KEYSTORE_PASSWORD"
-          echo "   - ANDROID_KEY_ALIAS"
-          echo "   - ANDROID_KEY_PASSWORD"
-          
-          buildozer android release
-        fi
+        buildozer android release
         
-        # Verify APK was created
         if ls bin/*.apk 1> /dev/null 2>&1; then
-          echo "[SUCCESS] RELEASE APK build successful!"
+          echo "[SUCCESS] RELEASE APK build completed!"
           ls -la bin/*.apk
         else
           echo "[ERROR] RELEASE APK build failed - no APK found"
@@ -219,7 +186,6 @@ jobs:
           echo "APK Size: $(du -h "$APK_FILE" | cut -f1)"
           echo "File type: $(file "$APK_FILE")"
           
-          # Install Android build tools for analysis
           sudo apt-get update -qq
           sudo apt-get install -y -qq aapt || echo "Could not install aapt"
           
@@ -263,7 +229,6 @@ jobs:
           const fs = require('fs');
           const path = require('path');
           
-          // Find APK file
           const binDir = 'bin';
           let apkInfo = 'APK built successfully with AccessMate logo!';
           
