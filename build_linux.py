@@ -117,7 +117,7 @@ def build_linux_executable():
     
     # Get paths
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    main_script = os.path.join(script_dir, "src", "main.py")
+    main_script = os.path.join(script_dir, "src", "main_desktop.py")
     
     if not os.path.exists(main_script):
         print(f"❌ Main script not found: {main_script}")
