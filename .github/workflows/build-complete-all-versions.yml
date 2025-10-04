@@ -45,8 +45,11 @@ jobs:
     
     - name: Build Windows EXE (Portable)
       run: |
+        Write-Host "Setting up main.py for desktop build..."
+        Copy-Item "src\main_desktop.py" "src\main.py" -Force -ErrorAction SilentlyContinue
+        $env:PYTHONIOENCODING = "utf-8"
         python build_windows.py
-        echo "✅ Portable EXE created"
+        Write-Host "[SUCCESS] Portable EXE created"
     
     - name: Create Inno Setup Installer
       run: |

@@ -1,4 +1,5 @@
-﻿# AccessMate Windows Executable Build Script
+﻿# -*- coding: utf-8 -*-
+# AccessMate Windows Executable Build Script
 # This script creates a Windows executable with proper icon and metadata
 
 import PyInstaller.__main__
@@ -33,7 +34,7 @@ VSVersionInfo(
         StringStruct(u'FileDescription', u'AccessMate - Accessibility Assistant'),
         StringStruct(u'FileVersion', u'1.0.0.0'),
         StringStruct(u'InternalName', u'AccessMate'),
-        StringStruct(u'LegalCopyright', u'Copyright © 2025 AccessMate Team'),
+        StringStruct(u'LegalCopyright', u'Copyright (C) 2025 AccessMate Team'),
         StringStruct(u'OriginalFilename', u'AccessMate.exe'),
         StringStruct(u'ProductName', u'AccessMate'),
         StringStruct(u'ProductVersion', u'1.0.0.0')])
@@ -92,9 +93,9 @@ def build_windows_exe():
     ])
     
     # Hidden imports for modules that might not be detected
-    hidden_imports = [
+    potential_hidden_imports = [
         "pyttsx3.drivers",
-        "pyttsx3.drivers.sapi5",
+        "pyttsx3.drivers.sapi5", 
         "pygame.mixer",
         "tkinter.messagebox",
         "tkinter.filedialog",
@@ -113,6 +114,16 @@ def build_windows_exe():
         "certifi",
     ]
     
+    # Only include hidden imports for modules that are actually available
+    hidden_imports = []
+    for module in potential_hidden_imports:
+        try:
+            __import__(module)
+            hidden_imports.append(module)
+            print(f"[INFO] Including hidden import: {module}")
+        except ImportError:
+            print(f"[WARNING] Skipping unavailable module: {module}")
+    
     for module in hidden_imports:
         args.extend(["--hidden-import", module])
     
@@ -125,14 +136,14 @@ def build_windows_exe():
     
     try:
         PyInstaller.__main__.run(args)
-        print("\n✅ Windows executable built successfully!")
-        print("📁 Output: dist/AccessMate.exe")
-        print("🛡️ Includes version info for better Windows security recognition")
-        print("⚠️  Note: Smart App Control may still block unsigned executables")
-        print("📖 See SMART_APP_CONTROL_SOLUTION.md for bypass instructions")
+        print("\n[SUCCESS] Windows executable built successfully!")
+        print("[OUTPUT] dist/AccessMate.exe")
+        print("[INFO] Includes version info for better Windows security recognition")
+        print("[WARNING] Smart App Control may still block unsigned executables")
+        print("[INFO] See SMART_APP_CONTROL_SOLUTION.md for bypass instructions")
         return True
     except Exception as e:
-        print(f"\n❌ Build failed: {e}")
+        print(f"\n[ERROR] Build failed: {e}")
         return False
     finally:
         # Clean up temporary version file

@@ -1,4 +1,5 @@
 ﻿#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 macOS Build Script for AccessMate
 Creates a macOS app bundle with proper icon and metadata
@@ -142,7 +143,7 @@ def build_macos_app():
         args.append(f"--icon={icns_path}")
     
     # Hidden imports for macOS
-    hidden_imports = [
+    potential_hidden_imports = [
         "pyttsx3.drivers",
         "pyttsx3.drivers.nsss",  # macOS speech driver
         "pygame.mixer",
@@ -166,6 +167,16 @@ def build_macos_app():
         "certifi",
     ]
     
+    # Only include hidden imports for modules that are actually available
+    hidden_imports = []
+    for module in potential_hidden_imports:
+        try:
+            __import__(module)
+            hidden_imports.append(module)
+            print(f"[INFO] Including hidden import: {module}")
+        except ImportError:
+            print(f"[WARNING] Skipping unavailable module: {module}")
+    
     for module in hidden_imports:
         args.extend(["--hidden-import", module])
     
@@ -182,8 +193,8 @@ def build_macos_app():
         app_path = os.path.join("dist", "AccessMate.app")
         if os.path.exists(app_path):
             create_info_plist(app_path)
-            print(f"\nmacOS app created: {app_path}")
-            print("📱 App will show proper icon in Dock and Finder")
+            print(f"\n[SUCCESS] macOS app created: {app_path}")
+            print("[INFO] App will show proper icon in Dock and Finder")
             return True
         else:
             print("\nApp bundle not found after build")
