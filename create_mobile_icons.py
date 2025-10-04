@@ -161,13 +161,13 @@ def main():
         success = False
     
     if success:
-        print("\n✅ All icons created successfully!")
+        print("\nAll icons created successfully!")
         print("\nNext steps:")
         print("1. Copy android icons to your Android project res/mipmap-* directories")
         print("2. Copy iOS icons to your iOS project Images.xcassets/AppIcon.appiconset/")
         print("3. Use accessmate_logo_multisize.ico for Windows builds")
     else:
-        print("\n❌ Some icons failed to create. Check errors above.")
+        print("\nSome icons failed to create. Check errors above.")
 
 if __name__ == "__main__":
     main()
