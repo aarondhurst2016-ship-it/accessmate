@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 iOS Build Script for AccessMate
 Creates an iOS app with proper icon integration using kivy-ios

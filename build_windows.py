@@ -1,4 +1,4 @@
-# AccessMate Windows Executable Build Script
+﻿# AccessMate Windows Executable Build Script
 # This script creates a Windows executable with proper icon
 
 import PyInstaller.__main__
@@ -68,10 +68,10 @@ def build_windows_exe():
     
     try:
         PyInstaller.__main__.run(args)
-        print(f"\n✅ Build completed! Check the 'dist' folder for AccessMate.exe")
+        print(f"\nBuild completed! Check the 'dist' folder for AccessMate.exe")
         return True
     except Exception as e:
-        print(f"\n❌ Build failed: {e}")
+        print(f"\nBuild failed: {e}")
         return False
 
 if __name__ == "__main__":

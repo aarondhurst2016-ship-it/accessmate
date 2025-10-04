@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 macOS Build Script for AccessMate
 Creates a macOS app bundle with proper icon and metadata
@@ -20,7 +20,7 @@ def create_icns_icon():
         # Path to source logo
         logo_path = os.path.join("src", "accessmate_logo.png")
         if not os.path.exists(logo_path):
-            print("❌ Logo file not found")
+            print("Logo file not found")
             return None
             
         # Create iconset directory
@@ -57,22 +57,22 @@ def create_icns_icon():
             ], capture_output=True, text=True)
             
             if result.returncode == 0:
-                print(f"✅ Created macOS icon: {icns_path}")
+                print(f"Created macOS icon: {icns_path}")
                 # Clean up iconset directory
                 shutil.rmtree(iconset_dir)
                 return icns_path
             else:
-                print(f"❌ iconutil failed: {result.stderr}")
+                print(f"iconutil failed: {result.stderr}")
                 return None
         else:
             print("⚠️  iconutil not available (not on macOS), keeping PNG files")
             return None
             
     except ImportError:
-        print("❌ PIL not available for icon creation")
+        print("PIL not available for icon creation")
         return None
     except Exception as e:
-        print(f"❌ Icon creation failed: {e}")
+        print(f"Icon creation failed: {e}")
         return None
 
 def create_info_plist(app_path):
@@ -104,7 +104,7 @@ def create_info_plist(app_path):
     with open(plist_path, 'wb') as f:
         plistlib.dump(info_plist, f)
     
-    print(f"✅ Created Info.plist: {plist_path}")
+    print(f"Created Info.plist: {plist_path}")
 
 def build_macos_app():
     """Build macOS app bundle"""
@@ -119,7 +119,7 @@ def build_macos_app():
     main_script = os.path.join(script_dir, "src", "main_desktop.py")
     
     if not os.path.exists(main_script):
-        print(f"❌ Main script not found: {main_script}")
+        print(f"Main script not found: {main_script}")
         return False
     
     # Create icon
@@ -172,15 +172,15 @@ def build_macos_app():
         app_path = os.path.join("dist", "AccessMate.app")
         if os.path.exists(app_path):
             create_info_plist(app_path)
-            print(f"\n✅ macOS app created: {app_path}")
+            print(f"\nmacOS app created: {app_path}")
             print("📱 App will show proper icon in Dock and Finder")
             return True
         else:
-            print("\n❌ App bundle not found after build")
+            print("\nApp bundle not found after build")
             return False
             
     except Exception as e:
-        print(f"\n❌ Build failed: {e}")
+        print(f"\nBuild failed: {e}")
         return False
 
 if __name__ == "__main__":

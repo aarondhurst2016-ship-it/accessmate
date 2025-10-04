@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Linux Build Script for AccessMate
 Creates a Linux executable with proper icon and desktop integration
@@ -17,7 +17,7 @@ def create_linux_icons():
         
         logo_path = os.path.join("src", "accessmate_logo.png")
         if not os.path.exists(logo_path):
-            print("❌ Logo file not found")
+            print("Logo file not found")
             return False
             
         logo = Image.open(logo_path).convert("RGBA")
@@ -51,10 +51,10 @@ def create_linux_icons():
         return True
         
     except ImportError:
-        print("❌ PIL not available for icon creation")
+        print("PIL not available for icon creation")
         return False
     except Exception as e:
-        print(f"❌ Icon creation failed: {e}")
+        print(f"Icon creation failed: {e}")
         return False
 
 def create_desktop_file():
@@ -89,7 +89,7 @@ Icon=accessmate
     with open(desktop_path, 'w') as f:
         f.write(desktop_content)
     
-    print(f"✅ Created desktop file: {desktop_path}")
+    print(f"Created desktop file: {desktop_path}")
     return desktop_path
 
 def create_appimage_appdir():
@@ -102,7 +102,7 @@ def create_appimage_appdir():
     for dir_path in dirs:
         os.makedirs(os.path.join(appdir, dir_path), exist_ok=True)
     
-    print(f"✅ Created AppDir structure: {appdir}")
+    print(f"Created AppDir structure: {appdir}")
     return appdir
 
 def build_linux_executable():
@@ -120,7 +120,7 @@ def build_linux_executable():
     main_script = os.path.join(script_dir, "src", "main_desktop.py")
     
     if not os.path.exists(main_script):
-        print(f"❌ Main script not found: {main_script}")
+        print(f"Main script not found: {main_script}")
         return False
     
     # Create icons and desktop file
@@ -175,7 +175,7 @@ def build_linux_executable():
             # Make executable
             os.chmod(executable_path, 0o755)
             
-            print(f"\n✅ Linux executable created: {executable_path}")
+            print(f"\nLinux executable created: {executable_path}")
             print(f"🖥️  Desktop file created: {desktop_file}")
             print("📱 Icons created for system integration")
             
@@ -187,11 +187,11 @@ def build_linux_executable():
             
             return True
         else:
-            print("\n❌ Executable not found after build")
+            print("\nExecutable not found after build")
             return False
             
     except Exception as e:
-        print(f"\n❌ Build failed: {e}")
+        print(f"\nBuild failed: {e}")
         return False
 
 if __name__ == "__main__":
