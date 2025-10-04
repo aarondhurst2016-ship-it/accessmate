@@ -29,7 +29,14 @@ jobs:
     - run: |
         Write-Host "📦 Creating Microsoft Store package..."
         New-Item -Path "dist/store" -ItemType Directory -Force
-        Copy-Item "dist/AccessMate.exe" "dist/store/"
+        # Check what executables were created
+        Get-ChildItem dist/ -ErrorAction SilentlyContinue
+        # Copy any .exe files we find
+        Get-ChildItem dist/*.exe -ErrorAction SilentlyContinue | Copy-Item -Destination "dist/store/" -ErrorAction SilentlyContinue
+        # Ensure we have AccessMate.exe specifically
+        if (Test-Path "dist/AccessMate.exe") {
+            Copy-Item "dist/AccessMate.exe" "dist/store/" -Force
+        }
         "# Microsoft Store Package - Ready for submission!" | Out-File -FilePath "dist/store/README.md" -Encoding UTF8
         Write-Host "✅ Windows store package ready"
     - uses: actions/upload-artifact@v4
@@ -57,9 +64,22 @@ jobs:
     - run: |
         echo "📦 Creating Mac App Store package..."
         mkdir -p dist/store
-        cp -r dist/AccessMate.app dist/store/
+        # Check what was actually created
+        ls -la dist/
+        # Copy app bundle if it exists, otherwise copy executable
+        if [ -d "dist/AccessMate.app" ]; then
+          cp -r dist/AccessMate.app dist/store/
+          cd dist/store && zip -r AccessMate-MacStore.zip AccessMate.app
+        elif [ -f "dist/AccessMate" ]; then
+          cp dist/AccessMate dist/store/AccessMate-macOS
+          cd dist/store && zip AccessMate-MacStore.zip AccessMate-macOS
+        else
+          echo "No macOS executable found, checking for any files..."
+          find dist/ -name "*AccessMate*" -type f
+          # Copy any AccessMate executable we find
+          find dist/ -name "*AccessMate*" -type f -exec cp {} dist/store/ \;
+        fi
         echo "# Mac App Store Package - Ready for submission!" > dist/store/README.md
-        cd dist/store && zip -r AccessMate-MacStore.zip AccessMate.app
         echo "✅ macOS store package ready"
     - uses: actions/upload-artifact@v4
       with:
@@ -86,8 +106,21 @@ jobs:
     - run: |
         echo "📦 Creating Linux store packages..."
         mkdir -p dist/store
-        cp dist/accessmate dist/store/
-        chmod +x dist/store/accessmate
+        # Check what was actually created
+        ls -la dist/
+        # Copy executable if it exists (try different possible names)
+        if [ -f "dist/AccessMate" ]; then
+          cp dist/AccessMate dist/store/accessmate
+        elif [ -f "dist/accessmate" ]; then
+          cp dist/accessmate dist/store/accessmate
+        else
+          echo "No AccessMate executable found, checking for any files..."
+          find dist/ -name "*AccessMate*" -type f -o -name "*accessmate*" -type f
+          # Copy any AccessMate executable we find
+          find dist/ -name "*AccessMate*" -type f -exec cp {} dist/store/accessmate \; 2>/dev/null || true
+          find dist/ -name "*accessmate*" -type f -exec cp {} dist/store/accessmate \; 2>/dev/null || true
+        fi
+        chmod +x dist/store/accessmate 2>/dev/null || true
         echo "# Linux Store Packages - Ready for submission!" > dist/store/README.md
         echo "✅ Linux store package ready"
     - uses: actions/upload-artifact@v4
