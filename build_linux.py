@@ -156,6 +156,16 @@ def build_linux_executable():
         "urllib3.util.retry",
         "gi.repository.Gtk",         # GTK for Linux GUI
         "gi.repository.GLib",        # GLib for Linux
+        # googletrans and its dependencies
+        "googletrans",
+        "googletrans.client",
+        "googletrans.constants",
+        "googletrans.models",
+        "httpx",
+        "httpcore",
+        "h11",
+        "sniffio",
+        "certifi",
     ]
     
     for module in hidden_imports:

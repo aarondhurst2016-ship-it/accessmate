@@ -54,6 +54,15 @@ def build_windows_exe():
         "PIL.ImageTk",
         "requests.adapters",
         "urllib3.util.retry",
+        "googletrans",
+        "googletrans.client",
+        "googletrans.constants",
+        "googletrans.models",
+        "httpx",
+        "httpcore",
+        "h11",
+        "sniffio",
+        "certifi",
     ]
     
     for module in hidden_imports:

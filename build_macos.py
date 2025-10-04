@@ -154,6 +154,16 @@ def build_macos_app():
         "urllib3.util.retry",
         "Foundation",  # macOS framework
         "Cocoa",       # macOS framework
+        # googletrans and its dependencies
+        "googletrans",
+        "googletrans.client",
+        "googletrans.constants",
+        "googletrans.models",
+        "httpx",
+        "httpcore",
+        "h11",
+        "sniffio",
+        "certifi",
     ]
     
     for module in hidden_imports:

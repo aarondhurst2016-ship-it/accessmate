@@ -1,5 +1,7 @@
 httpcore==0.16.3
-googletrans==3.1.0-alpha
+googletrans==4.0.0rc1
+httpx>=0.21.0
+h11>=0.14.0
 kivy
 gtts
 pygame
