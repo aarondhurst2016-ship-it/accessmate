@@ -15,42 +15,7 @@
         "focus": false,
         "panel": "shared"
       },
-      "problemMatcher": [],
-      "detail": "Build Windows executable with icon"
-    },
-    {
-      "label": "Build AccessMate macOS",
-      "type": "shell",
-      "command": "python",
-      "args": [
-        "build_macos.py"
-      ],
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": [],
-      "detail": "Build macOS app bundle with icon"
-    },
-    {
-      "label": "Build AccessMate Linux",
-      "type": "shell",
-      "command": "python",
-      "args": [
-        "build_linux.py"
-      ],
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": [],
-      "detail": "Build Linux executable with desktop integration"
+      "problemMatcher": []
     },
     {
       "label": "Build AccessMate Android",
@@ -67,63 +32,7 @@
         "focus": false,
         "panel": "shared"
       },
-      "problemMatcher": [],
-      "detail": "Build Android APK with icon"
-    },
-    {
-      "label": "Build AccessMate iOS",
-      "type": "shell",
-      "command": "python",
-      "args": [
-        "build_ios.py"
-      ],
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": [],
-      "detail": "Build iOS app with icon (requires macOS)"
-    },
-    {
-      "label": "Build All Platforms",
-      "type": "shell",
-      "command": "python",
-      "args": [
-        "build_all_platforms.py",
-        "all"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": [],
-      "detail": "Build AccessMate for all supported platforms"
-    },
-    {
-      "label": "Setup Icons",
-      "type": "shell",
-      "command": "python",
-      "args": [
-        "setup_icons.py"
-      ],
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": [],
-      "detail": "Generate and setup icons for all platforms"
+      "problemMatcher": []
     }
   ]
 }

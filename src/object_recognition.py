@@ -11,7 +11,12 @@ try:
     import cv2
 except ImportError:
     cv2 = None
-from .camera import get_live_frame
+try:
+    from camera import get_live_frame
+except ImportError:
+    # Fallback if camera module is not available
+    def get_live_frame():
+        return None
 
 def describe_scene():
     """
@@ -90,3 +95,24 @@ def identify_object():
         return f"Identified object: {best_obj} (confidence: {best_conf:.2f})"
     else:
         return "No recognizable object detected."
+
+class ObjectRecognizer:
+    """Main ObjectRecognizer class for GUI integration"""
+    
+    def __init__(self):
+        print("ObjectRecognizer initialized")
+        
+    def start(self):
+        """Start object recognition"""
+        print("Object Recognition started")
+        result = describe_scene()
+        print(f"Object recognition result: {result}")
+        return result
+        
+    def recognize_objects(self):
+        """Recognize objects in the current scene"""
+        return describe_scene()
+        
+    def stop(self):
+        """Stop object recognition"""
+        print("Object Recognition stopped")

@@ -215,6 +215,49 @@ GENERAL ISSUES:
 - Update system audio drivers if needed
 
 If problems persist, check the README file or contact support.
+
+📞 COMPREHENSIVE SUPPORT:
+• For support, use the in-app Support Message Center (found in the Help or Feedback menu)
+• Website: https://accessmate.app
+• Documentation: Available in app directory
+• GitHub: https://github.com/aarondhurst2016-ship-it/accessmate
+
+💡 ADDITIONAL SUPPORT FEATURES:
+• System Information: Check device details and compatibility
+• Microphone Test: Verify audio input is working properly
+• Voice Training: Improve speech recognition accuracy
+• Diagnostic Tools: Run system diagnostics and tests
+• Update Manager: Keep AccessMate current with latest features
+
+🔧 TROUBLESHOOTING QUICK FIXES:
+• Restart app if features stop responding
+• Check microphone permissions in system settings
+• Ensure internet connection for weather and translation
+• Update audio drivers if speech output fails
+• Run as administrator if file access issues occur
+
+📱 PLATFORM-SPECIFIC HELP:
+• Windows: All features fully supported
+• macOS: Native speech synthesis and voice recognition
+• Linux: Desktop integration with screen readers
+• Android: Mobile-optimized touch interface
+• iOS: Native iOS accessibility integration
+
+✨ ACCESSIBILITY FEATURES:
+• Full keyboard navigation with Tab/Arrow keys
+• Screen reader compatibility (JAWS, NVDA, VoiceOver)
+• High contrast and large text modes available
+• Voice command recognition in multiple languages
+• Haptic feedback on supported devices
+• Switch control support for mobility assistance
+
+🎯 GETTING THE MOST FROM ACCESSMATE:
+• Use voice commands for hands-free operation
+• Customize settings for your specific needs
+• Set up emergency contacts for safety features
+• Configure smart home devices for convenience
+• Enable location services for navigation features
+• Keep app updated for latest accessibility improvements
 """
 
 def get_feature_overview():

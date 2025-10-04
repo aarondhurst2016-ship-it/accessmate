@@ -1,0 +1,12 @@
+[
+  {
+    "from": "user",
+    "message": "Test message - is the in-app support messaging working?",
+    "timestamp": "2025-10-04T12:00:00.000Z"
+  },
+  {
+    "from": "support", 
+    "message": "Hello! Yes, the support messaging system is working. How can I help you today?",
+    "timestamp": "2025-10-04T12:05:00.000Z"
+  }
+]

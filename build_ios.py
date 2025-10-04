@@ -68,10 +68,10 @@ def create_ios_project_structure():
     ios_project_dir = "ios_project"
     os.makedirs(ios_project_dir, exist_ok=True)
     
-    # Create main.py for iOS (simplified version)
+    # Create main.py for iOS (use Android-compatible version with welcome system)
     ios_main_content = '''#!/usr/bin/env python3
 """
-iOS version of AccessMate - Mobile-optimized accessibility assistant
+iOS version of AccessMate - Mobile-optimized accessibility assistant with welcome system
 """
 
 import sys
@@ -81,43 +81,54 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 try:
-    # Import main components
-    from gui import launch
-    from battery_monitor import BatteryMonitor
+    # Import the Android/mobile version which has welcome popup and voice setup
+    from main_android import main
     
-    print("AccessMate iOS - Starting accessibility assistant...")
+    print("AccessMate iOS - Starting with welcome system...")
     
-    # Initialize battery monitoring for mobile
-    battery_monitor = BatteryMonitor()
-    
-    # Launch GUI (mobile-optimized)
-    launch(None)
+    # Launch mobile app with welcome popup and voice setup
+    main()
     
 except ImportError as e:
     print(f"Import error: {e}")
-    print("Running in basic mode...")
+    print("Running in fallback mode...")
     
-    # Basic iOS app if imports fail
-    import tkinter as tk
-    from tkinter import messagebox
-    
-    root = tk.Tk()
-    root.title("AccessMate iOS")
-    root.geometry("320x480")  # iPhone-like dimensions
-    
-    tk.Label(root, text="AccessMate", font=("Arial", 20, "bold")).pack(pady=20)
-    tk.Label(root, text="Accessibility Assistant", font=("Arial", 14)).pack(pady=10)
-    
-    def show_info():
-        messagebox.showinfo("AccessMate", "Mobile accessibility assistant running on iOS")
-    
-    tk.Button(root, text="About", command=show_info).pack(pady=10)
-    tk.Button(root, text="Exit", command=root.quit).pack(pady=10)
-    
-    root.mainloop()
+    # Fallback iOS app if main_android import fails
+    try:
+        from kivy.app import App
+        from kivy.uix.label import Label
+        from kivy.uix.button import Button
+        from kivy.uix.boxlayout import BoxLayout
+        
+        class FallbackAccessMateApp(App):
+            def build(self):
+                layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
+                
+                title = Label(text='AccessMate iOS', font_size='20sp', size_hint_y=None, height='60dp')
+                subtitle = Label(text='Accessibility Assistant', font_size='14sp', size_hint_y=None, height='40dp')
+                
+                info_btn = Button(text='About', size_hint_y=None, height='50dp')
+                info_btn.bind(on_press=self.show_info)
+                
+                layout.add_widget(title)
+                layout.add_widget(subtitle)
+                layout.add_widget(info_btn)
+                
+                return layout
+            
+            def show_info(self, instance):
+                print("AccessMate - Comprehensive accessibility assistant for iOS")
+        
+        FallbackAccessMateApp().run()
+        
+    except ImportError:
+        # Ultimate fallback - basic console
+        print("AccessMate iOS - Limited console mode")
+        print("Welcome to AccessMate - Accessibility features available via voice commands")
+        input("Press Enter to exit...")
 
 if __name__ == "__main__":
-    print("AccessMate iOS version starting...")
+    print("AccessMate iOS version starting with welcome system...")
 '''
     
     ios_main_path = os.path.join(ios_project_dir, "main.py")

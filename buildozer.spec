@@ -60,13 +60,19 @@ autofullscreen = 0
 # (str) Presplash of the application
 presplash.filename = %(source.dir)s/android_icon.png
 
-# (str) Icon of the application
+# (str) Icon of the application  
 icon.filename = %(source.dir)s/android_icon.png
 
-# (str) Android specific
-# Use the generated Android icons (buildozer will copy them automatically)
-# android.add_src = android_icons
-# android.add_aars = android_icons/playstore/ic_launcher.png
+# (str) Android specific icons
+# Use the properly structured Android icons 
+android.add_src = android_icons
+
+# Android adaptive icon configuration
+android.adaptive_icon.background_color = #000000
+android.adaptive_icon.foreground_color = #FFD600
+
+# Android presplash configuration
+android.presplash_color = #000000
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait

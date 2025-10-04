@@ -576,6 +576,31 @@ def listen_for_commands():
         engine.say(f"Could not process command: {e}")
         engine.runAndWait()
 
+class ScreenReader:
+    """Main ScreenReader class for GUI integration"""
+    
+    def __init__(self):
+        self.engine = pyttsx3.init()
+        
+    def start(self):
+        """Start the screen reader functionality"""
+        print("Screen Reader started")
+        speak("Screen Reader activated")
+        listen_for_commands()
+        
+    def read_screen(self):
+        """Read the current screen"""
+        return read_screen()
+        
+    def read_window(self):
+        """Read the current window"""
+        return read_foreground_window()
+        
+    def stop(self):
+        """Stop the screen reader"""
+        speak("Screen Reader stopped")
+        print("Screen Reader stopped")
+
 if __name__ == "__main__":
     print("Testing speech output...")
     test_speech_output()

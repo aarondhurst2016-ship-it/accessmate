@@ -19,17 +19,27 @@ except ImportError:
     mobile_background = False
 
 engine = pyttsx3.init()
-from email_integration import read_emails
+
+# Import email_integration conditionally to avoid circular imports
+try:
+    from email_integration import read_emails
+except ImportError:
+    def read_emails():
+        return "Email integration not available"
 
 # Automatically start email announcement thread on module load
 def _auto_start_email_announcement():
+    """Auto-start function - called later to avoid circular imports"""
     try:
         start_email_announcement_thread()
         print("Email announcement thread started automatically.")
     except Exception as e:
         print(f"Failed to start email announcement thread: {e}")
 
-_auto_start_email_announcement()
+# Note: _auto_start_email_announcement() should be called after all imports are resolved to avoid circular import issues.
+# To ensure proper initialization, call it in a guarded block or after all dependencies are loaded.
+if __name__ == "__main__":
+    _auto_start_email_announcement()
 
 # Automatically announce dangerous weather alerts for user's location
 def announce_weather_alerts_loop(check_interval=600):
@@ -973,5 +983,10 @@ def listen_for_commands():
         engine.runAndWait()
     except Exception as e:
         print(f"General error: {e}")
-        engine.say(f"Could not process command: {e}")
-        engine.runAndWait()
+def start_voice_commands():
+    """Initialize voice command system - runs listen_for_commands once"""
+    print("Starting voice command system...")
+    listen_for_commands()
+    """Main voice command loop - alias for listen_for_commands"""
+    print("Starting voice command loop...")
+    listen_for_commands()

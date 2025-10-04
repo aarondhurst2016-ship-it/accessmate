@@ -24,3 +24,13 @@ openpyxl
 xlrd
 pyinstaller
 pytesseract
+keyboard
+pyautogui
+pygetwindow
+pyperclip
+# Platform-specific dependencies (install as needed)
+# Windows: pywinauto (already included above)
+# macOS: pyobjc-framework-Cocoa, pyobjc-framework-Quartz
+# Linux: python-xlib, xdotool (system package)
+# Android: python-for-android, jnius
+# iOS: pyobjc-framework-UIKit, pyobjc-framework-AVFoundation

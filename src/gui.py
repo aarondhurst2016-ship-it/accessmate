@@ -663,6 +663,7 @@ import json
 import uuid
 import platform
 BACKEND_FILE = "account_backend.json"
+MAX_DEVICES_PER_ACCOUNT = 3  # Maximum devices allowed per account
 
 def backend_load():
     try:
@@ -684,9 +685,10 @@ def backend_list_devices(email):
 
 def backend_mark_purchased(email):
     db = backend_load()
-    if email in db:
-        db[email]["purchased"] = True
-        backend_save(db)
+    if email not in db:
+        db[email] = {"devices": [], "purchased": False}
+    db[email]["purchased"] = True
+    backend_save(db)
 
 def get_device_id():
     device_file = "device_id.txt"
@@ -709,6 +711,92 @@ def backend_remove_device(email, device_id):
             backend_save(db)
             return True
     return False
+
+def backend_check_device_limit(email):
+    """Check if account has reached the maximum device limit"""
+    db = backend_load()
+    devices = db.get(email, {}).get("devices", [])
+    return len(devices) >= MAX_DEVICES_PER_ACCOUNT
+
+# License Key System
+VALID_LICENSE_KEYS = {
+    "AM-FULL-2025-KEY01": "AccessMate Full Version Key 01",
+    "AM-FULL-2025-KEY02": "AccessMate Full Version Key 02", 
+    "AM-FULL-2025-KEY03": "AccessMate Full Version Key 03",
+    "AM-FULL-2025-KEY04": "AccessMate Full Version Key 04",
+    "AM-FULL-2025-KEY05": "AccessMate Full Version Key 05",
+    "AM-FULL-2025-KEY06": "AccessMate Full Version Key 06",
+    "AM-FULL-2025-KEY07": "AccessMate Full Version Key 07",
+    "AM-FULL-2025-KEY08": "AccessMate Full Version Key 08",
+    "AM-FULL-2025-KEY09": "AccessMate Full Version Key 09",
+    "AM-FULL-2025-KEY10": "AccessMate Full Version Key 10",
+    "AM-FULL-2025-KEY11": "AccessMate Full Version Key 11",
+    "AM-FULL-2025-KEY12": "AccessMate Full Version Key 12",
+    "AM-FULL-2025-KEY13": "AccessMate Full Version Key 13",
+    "AM-FULL-2025-KEY14": "AccessMate Full Version Key 14",
+    "AM-FULL-2025-KEY15": "AccessMate Full Version Key 15",
+    "AM-FULL-2025-KEY16": "AccessMate Full Version Key 16",
+    "AM-FULL-2025-KEY17": "AccessMate Full Version Key 17",
+    "AM-FULL-2025-KEY18": "AccessMate Full Version Key 18",
+    "AM-FULL-2025-KEY19": "AccessMate Full Version Key 19",
+    "AM-FULL-2025-KEY20": "AccessMate Full Version Key 20"
+}
+
+def backend_validate_license_key(key):
+    """Validate a license key and return True if valid"""
+    return key.strip().upper() in VALID_LICENSE_KEYS
+
+def backend_activate_license_key(email, key):
+    """Activate a license key for an account"""
+    if not backend_validate_license_key(key):
+        return False, "Invalid license key"
+    
+    # Check if key is already used
+    db = backend_load()
+    for user_email, user_data in db.items():
+        if user_data.get("license_key") == key.strip().upper():
+            if user_email != email:
+                return False, "License key already in use"
+    
+    # Activate the key
+    if email not in db:
+        db[email] = {"devices": [], "purchased": False}
+    
+    db[email]["purchased"] = True
+    db[email]["license_key"] = key.strip().upper()
+    db[email]["activation_date"] = datetime.datetime.now().isoformat()
+    backend_save(db)
+    
+    return True, "License key activated successfully!"
+
+def backend_check_license_key_activated(email):
+    """Check if account has an activated license key"""
+    db = backend_load()
+    return db.get(email, {}).get("license_key") is not None
+
+def backend_add_device(email, device_id, device_name):
+    """Add a device to account if under limit"""
+    db = backend_load()
+    if email not in db:
+        db[email] = {"devices": [], "purchased": False}
+    
+    devices = db[email].get("devices", [])
+    
+    # Check if device already exists
+    for device in devices:
+        if (isinstance(device, dict) and device.get("id") == device_id) or device == device_id:
+            return True  # Device already registered
+    
+    # Check device limit
+    if len(devices) >= MAX_DEVICES_PER_ACCOUNT:
+        return False  # Too many devices
+    
+    # Add new device
+    devices.append({"id": device_id, "name": device_name, "registered": datetime.datetime.now().isoformat()})
+    db[email]["devices"] = devices
+    backend_save(db)
+    return True
+
 # --- Platform-specific dependency notes ---
 # Linux: pip install notify2 pystray Pillow (and optionally python3-gi for AppIndicator)
 # macOS: pip install pync pystray Pillow
@@ -918,7 +1006,17 @@ def open_settings_gui():
         win = tk.Toplevel(settings_win)
         win.title("Registered Devices")
         win.configure(bg="#222")
-        tk.Label(win, text="Your Devices:", font=("Arial", 13), bg="#222", fg="#FFD600").pack(pady=5)
+        device_count = len(devices)
+        tk.Label(win, text=f"Your Devices ({device_count}/{MAX_DEVICES_PER_ACCOUNT}):", font=("Arial", 13), bg="#222", fg="#FFD600").pack(pady=5)
+        
+        # Show device limit status
+        if device_count >= MAX_DEVICES_PER_ACCOUNT:
+            tk.Label(win, text="⚠️ Device limit reached! Remove old devices to add new ones.", 
+                    font=("Arial", 10), bg="#222", fg="#FF6600").pack(pady=2)
+        else:
+            remaining = MAX_DEVICES_PER_ACCOUNT - device_count
+            tk.Label(win, text=f"✅ You can add {remaining} more device(s).", 
+                    font=("Arial", 10), bg="#222", fg="#4CAF50").pack(pady=2)
         for d in devices:
             did = d["id"] if isinstance(d, dict) else d
             dname = d["name"] if isinstance(d, dict) and "name" in d else "Unknown Device"
@@ -992,6 +1090,23 @@ def open_settings_gui():
     if hasattr(user_settings, 'account') and user_settings.account.get('email'):
         account_status_var.set(f"Logged in as: {user_settings.account['email']}")
     tk.Label(account_frame, textvariable=account_status_var, font=("Arial", 12), bg="#222", fg="#FFD600").pack(anchor="w", padx=5, pady=2)
+    
+    # Device count display
+    device_count_var = tk.StringVar(value="")
+    device_count_label = tk.Label(account_frame, textvariable=device_count_var, font=("Arial", 10), bg="#222", fg="#AAA")
+    device_count_label.pack(anchor="w", padx=5, pady=0)
+    
+    def update_device_count_display():
+        account_email = getattr(user_settings, 'account', {}).get('email')
+        if account_email:
+            devices = backend_list_devices(account_email)
+            device_count = len(devices)
+            device_count_var.set(f"Registered devices: {device_count}/{MAX_DEVICES_PER_ACCOUNT}")
+        else:
+            device_count_var.set("")
+    
+    # Update device count on load
+    update_device_count_display()
 
     def save_account(email, token):
         if not hasattr(user_settings, 'account'):
@@ -1000,11 +1115,29 @@ def open_settings_gui():
         user_settings.account['token'] = token
         user_settings.save("user_settings.json")
         account_status_var.set(f"Logged in as: {email}")
+        
+        # Register this device to the account
+        device_id = get_device_id()
+        device_name = f"{platform.system()} Device ({platform.node()})"
+        
+        if not backend_add_device(email, device_id, device_name):
+            # Device limit reached
+            import tkinter as tk
+            tk.messagebox.showwarning(
+                "Device Limit Reached",
+                f"This account has reached the maximum of {MAX_DEVICES_PER_ACCOUNT} devices.\n\n"
+                "Please remove an old device from Settings → Account → View Devices "
+                "before using AccessMate on this device."
+            )
+        
+        # Update device count display
+        update_device_count_display()
 
     def do_logout():
         user_settings.account = {}
         user_settings.save("user_settings.json")
         account_status_var.set("Not logged in")
+        update_device_count_display()
 
     def do_login():
         login_win = tk.Toplevel(settings_win)

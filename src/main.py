@@ -1,7 +1,44 @@
-# Main entry point for Talkback Assistant
-# Modular imports for accessibility, speech, and integrations
-from gui import launch
+# Main entry point for AccessMate
+# This file redirects to the appropriate platform-specific main file
+# For desktop: use main_desktop.py (has welcome popup and voice setup)
+# For mobile: use main_android.py (has mobile welcome and voice setup)
+
+import sys
 import os
+
+def detect_platform():
+    """Detect current platform and redirect to appropriate main"""
+    try:
+        # Check for Android environment
+        if 'ANDROID_ROOT' in os.environ or hasattr(sys, 'platform') and sys.platform == 'android':
+            print("Detected Android platform - launching mobile version with welcome system")
+            from main_android import main
+            main()
+            return
+        
+        # Check for iOS (Kivy-iOS environment)
+        try:
+            import ios
+            print("Detected iOS platform - launching mobile version with welcome system")
+            from main_android import main
+            main()
+            return
+        except ImportError:
+            pass
+        
+        # Default to desktop version for Windows/macOS/Linux
+        print("Detected desktop platform - launching desktop version with welcome system")
+        from main_desktop import launch
+        launch()
+        
+    except ImportError as e:
+        print(f"Import error: {e}")
+        print("Falling back to basic console mode...")
+        print("AccessMate - Comprehensive Accessibility Assistant")
+        print("Please ensure all dependencies are installed.")
+        input("Press Enter to exit...")
+
+# Legacy support - maintain existing functionality for backwards compatibility
 from battery_monitor import BatteryMonitor
 
 # Windows startup option
@@ -118,12 +155,8 @@ if __name__ == "__main__":  # Fixed: was **name** now __name__
         else:
             print("Usage: python main.py startup on|off")
         sys.exit(0)
-    # Only import and launch features that are enabled
-    # Pass user_settings to GUI for feature hiding (optional)
-    # Example: if not user_settings.enable_ocr: skip OCR imports
-    # This is a simple runtime filter; for full modularity, refactor feature modules to check settings before running
-    # For now, launch GUI as normal; GUI will hide disabled features
-    launch(None)
+    # Launch platform-specific main with welcome system
+    detect_platform()
 
 # To run the application, use the following commands:
 # cd c:\Users\aaron\Talkback app\src
