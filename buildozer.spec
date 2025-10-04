@@ -191,8 +191,7 @@ android.blacklist_src =
 # (list) List of Java .jar files to add to the libs so that pyjnius can access their classes. Don't add jars that you do not need, since extra jars can slow down the build process. Allows wildcards matching, for example: OUYA-ODK/libs/*.jar
 android.add_jars = 
 
-# (list) List of Java files to add to the android project (can be java or a directory containing the files)
-android.add_src = 
+# (list) List of Java files to add to the android project (configured above with android_icons)
 
 # (list) Android AAR archives to add
 android.add_aars = 
