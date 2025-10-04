@@ -12,6 +12,9 @@ package.domain = com.accessmate
 # (str) Source code where the main.py live
 source.dir = src
 
+# (str) Main script for Android (use Android-compatible version)
+source.main = main_android.py
+
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,txt,json,wav,mp3
 
@@ -36,10 +39,10 @@ version = 1.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pillow,requests,plyer,pyjnius,android,kivymd
+requirements = python3,kivy,pillow,requests,plyer,pyjnius
 
-# (str) Bootstrap to use for android builds
-# android.bootstrap = sdl2
+# (str) Bootstrap to use for android builds  
+p4a.bootstrap = sdl2
 
 # (bool) Indicate if the application should be fullscreen or not
 autofullscreen = 0
@@ -69,7 +72,7 @@ icon.filename = %(source.dir)s/android_icon.png
 orientation = portrait
 
 # (list) List of service to declare
-services = AccessMateService:./service/accessmate_service.py:foreground
+# services = AccessMateService:./service/accessmate_service.py:foreground
 
 #
 # OSX Specific
@@ -319,7 +322,7 @@ android.debug_artifact = apk
 
 # (str) Bootstrap to use for android builds
 # Run `buildozer android p4a -- bootstraps` for a list of valid bootstraps.
-p4a.bootstrap = sdl2
+# p4a.bootstrap = sdl2 (configured above)
 
 # (int) port number to specify an explicit --port= p4a argument (eg for bootstrap flask)
 #p4a.port = 
