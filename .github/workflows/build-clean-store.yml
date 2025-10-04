@@ -22,7 +22,10 @@ jobs:
         pip install pyinstaller pillow
     - run: python create_mobile_icons.py
       continue-on-error: true
-    - run: python build_windows.py
+    - run: |
+        Write-Host "Setting up main.py for desktop build..."
+        Copy-Item "src\main_desktop.py" "src\main.py" -Force -ErrorAction SilentlyContinue
+        python build_windows.py
     - run: |
         Write-Host "📦 Creating Microsoft Store package..."
         New-Item -Path "dist/store" -ItemType Directory -Force
@@ -47,7 +50,10 @@ jobs:
         pip install pyinstaller pillow
     - run: python create_mobile_icons.py
       continue-on-error: true
-    - run: python build_macos.py
+    - run: |
+        echo "Setting up main.py for desktop build..."
+        cp src/main_desktop.py src/main.py
+        python build_macos.py
     - run: |
         echo "📦 Creating Mac App Store package..."
         mkdir -p dist/store
@@ -73,7 +79,10 @@ jobs:
         pip install pyinstaller pillow
     - run: python create_mobile_icons.py
       continue-on-error: true
-    - run: python build_linux.py
+    - run: |
+        echo "Setting up main.py for desktop build..."
+        cp src/main_desktop.py src/main.py
+        python build_linux.py
     - run: |
         echo "📦 Creating Linux store packages..."
         mkdir -p dist/store
@@ -144,7 +153,10 @@ jobs:
         pip install pillow
     - run: python create_mobile_icons.py
       continue-on-error: true
-    - run: python build_ios.py
+    - run: |
+        echo "Setting up main.py for desktop build..."
+        cp src/main_desktop.py src/main.py
+        python build_ios.py
     - run: |
         echo "📦 Creating Apple App Store package..."
         mkdir -p dist/store
