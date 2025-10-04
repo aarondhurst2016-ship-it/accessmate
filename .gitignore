@@ -49,6 +49,12 @@ temp_*
 user_settings.json
 settings.json
 
+# License keys (keep private - do not commit to GitHub)
+ACCESSMATE_LICENSE_KEYS.md
+*LICENSE_KEYS*
+license_keys.txt
+*.key
+
 # Large media files
 *.mp4
 *.avi
