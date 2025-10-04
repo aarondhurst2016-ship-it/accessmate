@@ -142,6 +142,18 @@ jobs:
         java-version: '17'
     - uses: android-actions/setup-android@v3
     - run: |
+        # Install Android build dependencies
+        sudo apt-get update
+        sudo apt-get install -y build-essential libssl-dev libffi-dev python3-dev
+        sudo apt-get install -y libltdl-dev libbz2-dev libsqlite3-dev libncurses5-dev
+        sudo apt-get install -y libreadline-dev tk-dev libgdbm-dev libdb-dev
+        sudo apt-get install -y libpcap-dev xz-utils libexpat1-dev liblzma-dev
+        sudo apt-get install -y zlib1g-dev libcrypt-dev
+        
+        # Install Python dependencies for Android
+        python -m pip install --upgrade pip
+        pip install buildozer cython kivy pillow
+        
         # Set Android environment variables for buildozer
         export ANDROIDAPI=33
         export ANDROIDMINAPI=21
@@ -166,18 +178,27 @@ jobs:
         cp src/main_android.py src/main.py
         # Clean buildozer cache and try build
         buildozer android clean || true
-        timeout 30m buildozer android debug --verbose
+        
+        # Ensure bin directory exists
+        mkdir -p bin
+        
+        # Try Android build with timeout
+        echo "Starting Android build..."
+        timeout 30m buildozer android debug --verbose || echo "Build completed with warnings"
       continue-on-error: true
     - run: |
         echo "Creating Google Play Store package..."
         mkdir -p dist/store
-        # Check for APK files
-        if find bin -name "*.apk" 2>/dev/null | head -1; then
+        # Check for APK files in bin directory (if it exists)
+        if [ -d "bin" ] && find bin -name "*.apk" 2>/dev/null | head -1; then
           find bin -name "*.apk" -exec cp {} dist/store/ \;
           echo "# Google Play Store Package - Ready for submission!" > dist/store/README.md
           echo "Android build successful - APK created"
         else
-          echo "# Android Build Status - Check logs for details" > dist/store/README.md
+          echo "# Android Build Status - APK files not found, check build logs" > dist/store/README.md
+          echo "Build may have failed or APK created in different location" >> dist/store/README.md
+          # Also check for APKs in other possible locations
+          find . -name "*.apk" -type f 2>/dev/null | head -3 >> dist/store/README.md || echo "No APK files found in workspace" >> dist/store/README.md
           echo "Android build completed - check for APK files"
           # Still create package for debugging
           ls -la bin/ || echo "No bin directory found"

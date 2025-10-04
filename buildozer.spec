@@ -100,12 +100,7 @@ osx.kivy_version = 1.9.1
 # (bool) Indicate if the application should be fullscreen or not
 fullscreen = 0
 
-# (string) Presplash background color (for android toolchain)
-# Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
-# red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
-# darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
-# olive, purple, silver, teal.
-android.presplash_color = #FFFFFF
+# (string) Presplash background color is configured above in Android presplash section
 
 # (string) Presplash animation using Lottie format.
 # see https://lottie.github.io/lottie-spec/ for examples and https://airbnb.design/lottie/
