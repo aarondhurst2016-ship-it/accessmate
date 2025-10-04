@@ -39,7 +39,7 @@ version = 1.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pillow,requests,plyer,pyjnius
+requirements = python3,kivy,pillow
 
 # (str) Bootstrap to use for android builds  
 p4a.bootstrap = sdl2
@@ -119,13 +119,13 @@ android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,RECO
 android.features = android.hardware.microphone,android.hardware.camera,android.hardware.bluetooth,android.software.leanback
 
 # (int) Target Android API, should be as high as possible.
-android.api = 34
+android.api = 33
 
 # (int) Minimum API your APK / AAB will support.
 android.minapi = 21
 
 # (int) Android SDK version to use
-android.sdk = 34
+android.sdk = 33
 
 # (str) Android NDK version to use
 android.ndk = 25b
