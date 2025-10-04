@@ -29,7 +29,7 @@ def setup_android_icons():
             shutil.copy2(src_icon, dest_icon)
             print(f"  Copied {density} icon: {dest_icon}")
     
-    print("✅ Android icons setup complete")
+    print("Android icons setup complete")
 
 def setup_ios_icons():
     """Setup iOS icons"""
@@ -48,7 +48,7 @@ def setup_ios_icons():
                 shutil.copy2(src_path, dest_path)
                 print(f"  Copied iOS icon: {dest_path}")
     
-    print("✅ iOS icons setup complete")
+    print("iOS icons setup complete")
 
 def update_buildozer_spec():
     """Update buildozer.spec with proper icon paths"""
@@ -57,7 +57,7 @@ def update_buildozer_spec():
     # Read current buildozer.spec
     spec_path = "buildozer.spec"
     if not os.path.exists(spec_path):
-        print("❌ buildozer.spec not found")
+        print("buildozer.spec not found")
         return False
     
     with open(spec_path, 'r') as f:
@@ -93,7 +93,7 @@ def update_buildozer_spec():
     with open(spec_path, 'w') as f:
         f.write(content)
     
-    print("✅ buildozer.spec updated")
+    print("buildozer.spec updated")
     return True
 
 def create_windows_task():
@@ -143,7 +143,7 @@ def create_windows_task():
     with open(tasks_file, 'w') as f:
         json.dump(windows_task, f, indent=2)
     
-    print(f"✅ VS Code tasks created: {tasks_file}")
+    print(f"VS Code tasks created: {tasks_file}")
 
 def main():
     print("AccessMate Mobile Icon Integration")
@@ -151,7 +151,7 @@ def main():
     
     # Check if we're in the right directory
     if not os.path.exists("src") or not os.path.exists("buildozer.spec"):
-        print("❌ Run this script from the AccessMate root directory")
+        print("Run this script from the AccessMate root directory")
         return
     
     # Setup platform icons
