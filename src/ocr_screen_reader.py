@@ -356,8 +356,12 @@ class OCRScreenReader:
             translated = translator.translate(text, src=lang, dest=target_lang)
             self.tts("Here is the translated important information:")
             self.tts(translated.text)
-        except Exception:
-            self.tts("Translation unavailable. Please install googletrans and langdetect.")
+        except ImportError:
+            print("[WARNING] googletrans not available - translation features disabled")
+            self.tts("Translation features are not available in this version.")
+        except Exception as e:
+            print(f"[WARNING] Translation failed: {e}")
+            self.tts("Translation unavailable due to an error.")
     def save_important_info(self, important_lines, filename=None, copy_clipboard=True):
         """
         Save important lines to a file and/or copy to clipboard.

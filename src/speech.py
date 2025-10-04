@@ -1,11 +1,24 @@
-from googletrans import Translator
+# Conditional import for googletrans - handle cases where it's not available
+try:
+    from googletrans import Translator
+    GOOGLETRANS_AVAILABLE = True
+except ImportError:
+    print("[WARNING] googletrans not available - translation features disabled")
+    GOOGLETRANS_AVAILABLE = False
+    Translator = None
 
 def translate_text(text, src_lang, dest_lang):
-    translator = Translator()
+    """Translate text using googletrans if available, otherwise return original text"""
+    if not GOOGLETRANS_AVAILABLE:
+        print(f"[INFO] Translation not available - returning original text")
+        return text
+    
     try:
+        translator = Translator()
         result = translator.translate(text, src=src_lang, dest=dest_lang)
         return result.text
-    except Exception:
+    except Exception as e:
+        print(f"[WARNING] Translation failed: {e} - returning original text")
         return text
 # Speech module for Talkback Assistant
 
