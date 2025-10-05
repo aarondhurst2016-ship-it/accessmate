@@ -1,0 +1,307 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build type'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+        - debug
+        - release
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          git \
+          python3 \
+          python3-pip \
+          python3-setuptools \
+          python3-dev \
+          ffmpeg \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libsdl2-ttf-dev \
+          libportmidi-dev \
+          libswscale-dev \
+          libavformat-dev \
+          libavcodec-dev \
+          zlib1g-dev \
+          libgstreamer1.0 \
+          gstreamer1.0-plugins-base \
+          gstreamer1.0-plugins-good \
+          libpulse-dev \
+          libasound2-dev \
+          libjack-dev \
+          portaudio19-dev \
+          libncurses5-dev \
+          libsqlite3-dev \
+          libssl-dev \
+          libffi-dev \
+          libbz2-dev \
+          libreadline-dev \
+          tk-dev \
+          zip \
+          unzip
+    
+    - name: Cache buildozer global directory
+      uses: actions/cache@v3
+      with:
+        path: ~/.buildozer
+        key: buildozer-global-${{ hashFiles('buildozer.spec') }}
+        restore-keys: |
+          buildozer-global-
+    
+    - name: Cache buildozer dependencies
+      uses: actions/cache@v3
+      with:
+        path: .buildozer
+        key: buildozer-${{ hashFiles('buildozer.spec') }}-${{ hashFiles('src/**/*.py') }}
+        restore-keys: |
+          buildozer-${{ hashFiles('buildozer.spec') }}-
+          buildozer-
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install buildozer cython
+        pip install -r requirements.txt
+    
+    - name: Prepare build environment
+      run: |
+        echo "Setting up build environment..."
+        
+        # Create buildozer.spec if it doesn't exist
+        if [ ! -f buildozer.spec ]; then
+          echo "Creating buildozer.spec..."
+          buildozer init
+        fi
+        
+        # Configure buildozer for AccessMate
+        echo "Configuring buildozer..."
+        
+        # Basic app configuration
+        sed -i 's/title = .*/title = AccessMate/' buildozer.spec || echo "title = AccessMate" >> buildozer.spec
+        sed -i 's/package.name = .*/package.name = accessmate/' buildozer.spec || echo "package.name = accessmate" >> buildozer.spec
+        sed -i 's/package.domain = .*/package.domain = org.accessmate/' buildozer.spec || echo "package.domain = org.accessmate" >> buildozer.spec
+        
+        # Source configuration
+        sed -i 's|source.dir = .*|source.dir = src|' buildozer.spec || echo "source.dir = src" >> buildozer.spec
+        sed -i 's|source.include_exts = .*|source.include_exts = py,png,jpg,kv,atlas,json,txt,wav,mp3|' buildozer.spec || echo "source.include_exts = py,png,jpg,kv,atlas,json,txt,wav,mp3" >> buildozer.spec
+        
+        # Android configuration
+        sed -i 's/android.api = .*/android.api = 30/' buildozer.spec || echo "android.api = 30" >> buildozer.spec
+        sed -i 's/android.minapi = .*/android.minapi = 21/' buildozer.spec || echo "android.minapi = 21" >> buildozer.spec
+        sed -i 's/android.sdk = .*/android.sdk = 30/' buildozer.spec || echo "android.sdk = 30" >> buildozer.spec
+        sed -i 's/android.ndk = .*/android.ndk = 25b/' buildozer.spec || echo "android.ndk = 25b" >> buildozer.spec
+        
+        # Permissions for accessibility app
+        echo "android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,RECORD_AUDIO,CAMERA,ACCESS_NETWORK_STATE,WAKE_LOCK,VIBRATE,SYSTEM_ALERT_WINDOW,ACCESSIBILITY_SERVICE" >> buildozer.spec
+        
+        # Requirements
+        echo "requirements = python3,kivy,kivymd,plyer,android,pyjnius,requests,beautifulsoup4,gtts,pygame,speechrecognition,pyttsx3,pillow,numpy" >> buildozer.spec
+        
+        echo "buildozer.spec configured for AccessMate"
+    
+    - name: Build Android APK (Debug)
+      if: github.event.inputs.build_type == 'debug' || github.event.inputs.build_type == ''
+      run: |
+        echo "[BUILD] Building DEBUG APK..."
+        buildozer android debug
+        
+        if ls bin/*.apk 1> /dev/null 2>&1; then
+          echo "[SUCCESS] DEBUG APK build completed!"
+          ls -la bin/*.apk
+        else
+          echo "[ERROR] DEBUG APK build failed - no APK found"
+          exit 1
+        fi
+    
+    - name: Build Android APK (Release)
+      if: github.event.inputs.build_type == 'release'
+      run: |
+        echo "[BUILD] Building unsigned RELEASE APK..."
+        echo "[INFO] For Google Play Store signed builds, add GitHub repository secrets:"
+        echo "  ANDROID_KEYSTORE, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD"
+        echo "[INFO] Current build creates unsigned APK suitable for manual signing"
+        
+        buildozer android release
+        
+        if ls bin/*.apk 1> /dev/null 2>&1; then
+          echo "[SUCCESS] RELEASE APK build completed!"
+          ls -la bin/*.apk
+        else
+          echo "[ERROR] RELEASE APK build failed - no APK found"
+          exit 1
+        fi
+
+    - name: Analyze APK
+      if: success()
+      run: |
+        if ls bin/*.apk 1> /dev/null 2>&1; then
+          echo "[ANALYSIS] APK Analysis:"
+          APK_FILE=$(ls bin/*.apk | head -1)
+          echo "APK File: $APK_FILE"
+          echo "APK Size: $(du -h "$APK_FILE" | cut -f1)"
+          echo "File type: $(file "$APK_FILE")"
+          
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq aapt || echo "Could not install aapt"
+          
+          if command -v aapt >/dev/null 2>&1; then
+            echo "APK Package Info:"
+            aapt dump badging "$APK_FILE" | head -5 || echo "Could not get package info"
+            echo "APK Permissions:"
+            aapt dump permissions "$APK_FILE" || echo "Could not analyze permissions"
+            echo "APK Icon Info:"
+            aapt dump resources "$APK_FILE" | grep -i icon || echo "Could not find icon info"
+          else
+            echo "aapt not available for detailed analysis"
+          fi
+        else
+          echo "[WARN] No APK files found for analysis"
+        fi
+    
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v3
+      if: success()
+      with:
+        name: android-apk-${{ github.run_number }}
+        path: bin/*.apk
+        retention-days: 30
+    
+    - name: Upload build logs
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: build-logs-${{ github.run_number }}
+        path: |
+          .buildozer/
+          *.log
+        retention-days: 7
+    
+    - name: Comment PR with APK info
+      if: github.event_name == 'pull_request' && success()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          try {
+            const apkFiles = fs.readdirSync('bin').filter(file => file.endsWith('.apk'));
+            
+            if (apkFiles.length > 0) {
+              const apkPath = path.join('bin', apkFiles[0]);
+              const stats = fs.statSync(apkPath);
+              const fileSizeInMB = (stats.size / (1024 * 1024)).toFixed(2);
+              
+              const apkInfo = 
+                "## APK Build Successful!\n\n" +
+                "- File: `" + apkFiles[0] + "`\n" +
+                "- Size: " + fileSizeInMB + " MB\n" +
+                "- Build: ${{ github.run_number }}\n" +
+                "- Commit: ${{ github.sha }}\n\n" +
+                "Download the APK with AccessMate logo from the workflow artifacts above.\n\n" +
+                "**Features:**\n" +
+                "- 40+ accessibility features\n" +
+                "- AccessMate branding and icons\n" +
+                "- Voice commands and screen reader\n" +
+                "- Complete mobile interface";
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: apkInfo
+              });
+            }
+          } catch (error) {
+            console.log('Error reading APK info:', error);
+          }
+
+  test-android-apk:
+    runs-on: ubuntu-latest
+    needs: build-android
+    if: success()
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Download APK artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: android-apk-${{ github.run_number }}
+        path: apk/
+    
+    - name: Install APK analysis tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y aapt
+    
+    - name: Analyze APK structure and icons
+      run: |
+        APK_FILE=$(ls apk/*.apk | head -1)
+        echo "[ANALYZE] Analyzing APK: $APK_FILE"
+        
+        echo "## APK Information"
+        aapt dump badging "$APK_FILE" | head -10
+        
+        echo -e "\n## Permissions"
+        aapt dump permissions "$APK_FILE"
+        
+        echo -e "\n## Features"
+        aapt dump configurations "$APK_FILE"
+        
+        echo -e "\n## Icon Resources"
+        aapt list "$APK_FILE" | grep -i icon
+        
+        echo -e "\n## APK Contents (first 20 files)"
+        aapt list "$APK_FILE" | head -20
+        
+        echo -e "\n## Logo/Icon Verification"
+        if aapt list "$APK_FILE" | grep -q "ic_launcher.png"; then
+          echo "AccessMate logo found in APK!"
+        else
+          echo "Logo may not be properly included"
+        fi

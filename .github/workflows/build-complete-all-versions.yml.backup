@@ -97,7 +97,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path "dist\installers"
         $innoScript | Out-File -FilePath "setup.iss" -Encoding UTF8
         & "C:\Program Files (x86)\Inno Setup 6\iscc.exe" "setup.iss"
-        echo "[✅ SUCCESS] Inno Setup hard system installer created with registry integration"
+        echo "[SUCCESS ✅] Inno Setup hard system installer created with registry integration"
     
     - name: Create MSI Package
       run: |
@@ -111,7 +111,7 @@ jobs:
             options={'bdist_msi': {'upgrade_code': '{12345678-1234-1234-1234-123456789012}'}}
         )"
         python setup.py bdist_msi
-        echo "[✅] MSI package created"
+        echo "MSI package created"
     
     - name: Create MSIX Store Package (Microsoft Store)
       run: |
@@ -137,7 +137,7 @@ jobs:
         Copy-Item "dist\${{ env.APP_NAME }}.exe" "dist\msix\"
         
         & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\makeappx.exe" pack /d "dist\msix" /p "dist\AccessMate-Store.msix" /overwrite
-        echo "[✅ SUCCESS] MSIX store package for Microsoft Store created"
+        echo "MSIX store package for Microsoft Store created"
     
     - name: Upload Windows Artifacts (Hard Install + Store)
       uses: actions/upload-artifact@v3

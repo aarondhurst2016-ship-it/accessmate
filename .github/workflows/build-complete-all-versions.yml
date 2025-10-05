@@ -97,7 +97,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path "dist\installers"
         $innoScript | Out-File -FilePath "setup.iss" -Encoding UTF8
         & "C:\Program Files (x86)\Inno Setup 6\iscc.exe" "setup.iss"
-        echo "Inno Setup hard system installer created with registry integration"
+        echo "[SUCCESS ] Inno Setup hard system installer created with registry integration"
     
     - name: Create MSI Package
       run: |
