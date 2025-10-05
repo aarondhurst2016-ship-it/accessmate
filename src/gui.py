@@ -718,21 +718,35 @@ def backend_check_device_limit(email):
     devices = db.get(email, {}).get("devices", [])
     return len(devices) >= MAX_DEVICES_PER_ACCOUNT
 
-# License Key System
-VALID_LICENSE_KEYS = {
-    "AM-FULL-2025-KEY01": "AccessMate Full Version Key 01",
-    "AM-FULL-2025-KEY02": "AccessMate Full Version Key 02", 
-    "AM-FULL-2025-KEY03": "AccessMate Full Version Key 03",
-    "AM-FULL-2025-KEY04": "AccessMate Full Version Key 04",
-    "AM-FULL-2025-KEY05": "AccessMate Full Version Key 05",
-    "AM-FULL-2025-KEY06": "AccessMate Full Version Key 06",
-    "AM-FULL-2025-KEY07": "AccessMate Full Version Key 07",
-    "AM-FULL-2025-KEY08": "AccessMate Full Version Key 08",
-    "AM-FULL-2025-KEY09": "AccessMate Full Version Key 09",
-    "AM-FULL-2025-KEY10": "AccessMate Full Version Key 10",
-    "AM-FULL-2025-KEY11": "AccessMate Full Version Key 11",
-    "AM-FULL-2025-KEY12": "AccessMate Full Version Key 12",
-    "AM-FULL-2025-KEY13": "AccessMate Full Version Key 13",
+# License Key System - Secure Implementation
+import os
+import json
+
+def load_license_keys():
+    """Load license keys from environment variable or local config"""
+    # Try environment variable first (for production)
+    keys_json = os.getenv('ACCESSMATE_LICENSE_KEYS')
+    if keys_json:
+        try:
+            return json.loads(keys_json)
+        except json.JSONDecodeError:
+            pass
+    
+    # Fallback to local file (for development)
+    try:
+        with open('license_keys.json', 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+    
+    # Demo keys for public repository
+    return {
+        "DEMO-KEY-01": "AccessMate Demo Key 01",
+        "DEMO-KEY-02": "AccessMate Demo Key 02",
+        "DEMO-KEY-03": "AccessMate Demo Key 03"
+    }
+
+VALID_LICENSE_KEYS = load_license_keys()
     "AM-FULL-2025-KEY14": "AccessMate Full Version Key 14",
     "AM-FULL-2025-KEY15": "AccessMate Full Version Key 15",
     "AM-FULL-2025-KEY16": "AccessMate Full Version Key 16",

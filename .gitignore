@@ -49,6 +49,11 @@ temp_*
 user_settings.json
 settings.json
 
+# License keys (private)
+license_keys.json
+*.key
+*.keys
+
 # License keys (keep private - do not commit to GitHub)
 ACCESSMATE_LICENSE_KEYS.md
 *LICENSE_KEYS*
