@@ -986,33 +986,35 @@ def launch():
 
     # External Screen Reader Functions
     def start_external_screen_reader():
-        """Start the external screen reader for reading other applications"""
+        """Start the AUTOMATIC external screen reader for reading other applications"""
         try:
-            from cross_platform_external_screen_reader import start_cross_platform_external_screen_reader as start_esr
-            reader = start_esr()
+            from automatic_external_screen_reader import start_automatic_external_screen_reader
+            reader = start_automatic_external_screen_reader()
             if reader:
                 platform_name = reader.platform.title()
-                content_var.set(f"🔍 Cross-platform external screen reader started on {platform_name}!\n"
-                              "Use hotkeys to read from any app:\n"
+                content_var.set(f"🤖 AUTOMATIC External Screen Reader started on {platform_name}!\n"
+                              "🔄 CONTINUOUS MODE IS ACTIVE\n"
+                              "📱 Window changes will be announced automatically\n\n"
+                              "Manual hotkeys also available:\n"
                               "• Ctrl+Shift+R - Read active window\n"
                               "• Ctrl+Shift+C - Read at cursor\n"
                               "• Ctrl+Shift+S - Read selection\n"
                               "• Ctrl+Shift+T - Toggle continuous mode")
-                speak(f"External screen reader started on {platform_name}! You can now read content from any application using hotkeys.")
+                speak(f"Automatic external screen reader started on {platform_name}! Continuous mode is active. Window changes will be announced automatically.")
             else:
-                content_var.set("❌ Failed to start external screen reader - check dependencies")
-                speak("Failed to start external screen reader")
+                content_var.set("❌ Failed to start automatic external screen reader - check dependencies")
+                speak("Failed to start automatic external screen reader")
         except Exception as e:
             content_var.set(f"❌ External screen reader error: {str(e)}")
             speak("External screen reader failed to start")
     
     def stop_external_screen_reader():
-        """Stop the external screen reader"""
+        """Stop the automatic external screen reader"""
         try:
-            from cross_platform_external_screen_reader import stop_cross_platform_external_screen_reader as stop_esr
-            stop_esr()
-            content_var.set("🔍 Cross-platform external screen reader stopped")
-            speak("External screen reader stopped")
+            from automatic_external_screen_reader import stop_automatic_external_screen_reader
+            stop_automatic_external_screen_reader()
+            content_var.set("� Automatic external screen reader stopped")
+            speak("Automatic external screen reader stopped")
         except Exception as e:
             content_var.set(f"❌ Error stopping external screen reader: {str(e)}")
             speak("Error stopping external screen reader")
@@ -1063,9 +1065,9 @@ def launch():
         ("Settings", "#4FC3F7", "Open comprehensive settings including account and device management.", open_full_settings),
         ("Toggle Startup", "#607D8B", "Enable or disable auto-start on Windows login.", toggle_startup_gui),
         
-        # External Screen Reader Features
-        ("External Screen Reader", "#FF5722", "Start external screen reader to read content from any application outside AccessMate.", toggle_external_screen_reader),
-        ("Stop External Reader", "#795548", "Stop the external screen reader system-wide functionality.", stop_external_screen_reader),
+        # Automatic External Screen Reader Features
+        ("🤖 Auto Screen Reader", "#FF5722", "Start AUTOMATIC screen reader that continuously reads window changes from any application.", start_external_screen_reader),
+        ("🛑 Stop Auto Reader", "#795548", "Stop the automatic external screen reader system.", stop_external_screen_reader),
         
         # Extended Features (from original gui.py - 50+ features restored!)
         ("Reminders & Alarms", "#FFB300", "Set reminders and alarms with full UI.", feature_placeholder("Reminders & Alarms")),

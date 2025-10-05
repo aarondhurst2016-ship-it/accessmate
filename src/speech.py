@@ -22,7 +22,15 @@ def translate_text(text, src_lang, dest_lang):
         return text
 # Speech module for Talkback Assistant
 
-from gtts import gTTS
+# Conditional import for gtts - handle cases where it's not available
+try:
+    from gtts import gTTS
+    GTTS_AVAILABLE = True
+except ImportError:
+    print("[WARNING] gtts not available - TTS features may be limited")
+    GTTS_AVAILABLE = False
+    gTTS = None
+
 import pygame
 import speech_recognition as sr
 
@@ -53,6 +61,10 @@ def list_microphones():
     return sr.Microphone.list_microphone_names()
 
 def speak(text, lang='en'):
+    if not GTTS_AVAILABLE:
+        print(f"[WARNING] gTTS not available - cannot speak: {text}")
+        return
+    
     import tempfile, os
     from gtts.lang import tts_langs
     supported_langs = tts_langs()

@@ -6,7 +6,7 @@ a = Analysis(
     pathex=['C:\\Users\\aaron\\accessmate\\src'],
     binaries=[],
     datas=[('C:\\Users\\aaron\\accessmate\\src', 'src')],
-    hiddenimports=['pyttsx3.drivers', 'pyttsx3.drivers.sapi5', 'pygame.mixer', 'tkinter.messagebox', 'tkinter.filedialog', 'PIL.Image', 'PIL.ImageTk', 'requests.adapters', 'urllib3.util.retry', 'googletrans', 'googletrans.client', 'googletrans.constants', 'googletrans.models', 'httpx', 'httpcore', 'h11', 'sniffio', 'certifi'],
+    hiddenimports=['pyttsx3.drivers', 'pyttsx3.drivers.sapi5', 'pygame.mixer', 'tkinter.messagebox', 'tkinter.filedialog', 'PIL.Image', 'PIL.ImageTk', 'requests.adapters', 'urllib3.util.retry', 'googletrans', 'googletrans.client', 'googletrans.constants', 'googletrans.models', 'gtts', 'gtts.tts', 'gtts.lang', 'httpx', 'httpcore', 'h11', 'sniffio', 'certifi'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -35,5 +35,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    version='C:\\Users\\aaron\\AppData\\Local\\Temp\\tmp01gukfi_.txt',
+    uac_admin=True,
     icon=['C:\\Users\\aaron\\accessmate\\src\\accessmate_logo_multisize.ico'],
 )

@@ -1,0 +1,105 @@
+{
+  "timestamp": "2025-10-05T01:34:32.218992",
+  "total_tests": 24,
+  "passed_tests": 23,
+  "failed_tests": 1,
+  "success_rate": 95.83333333333334,
+  "test_results": {
+    "Manager Initialization": {
+      "status": "PASSED",
+      "error": null
+    },
+    "User Profile Creation": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Automatic Login with Sync": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Automatic Feature Activation": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Cross-Device Data Copying": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Sync Manager Init": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Data Addition to Sync": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Automatic Sync Service": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Conflict Resolution": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Device-Specific Copy": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Login System Init": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Auto Login Setup": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Auto Login Execution": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Session Management": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Security Features": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Settings Manager Init": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Setting Get/Set Operations": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Settings Validation": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Settings Sync": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Settings Export/Import": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Complete User Journey": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Multi-Device Simulation": {
+      "status": "PASSED",
+      "error": null
+    },
+    "Error Recovery": {
+      "status": "FAILED",
+      "error": "Test returned False"
+    },
+    "Performance Under Load": {
+      "status": "PASSED",
+      "error": null
+    }
+  }
+}

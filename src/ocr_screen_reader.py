@@ -4,10 +4,18 @@ Provides OCR-based screen reading for images and PDFs using pytesseract and gtts
 """
 import pytesseract
 from PIL import Image
-from gtts import gTTS
 import os
 import tempfile
 import pygame
+
+# Conditional import for gtts - handle cases where it's not available
+try:
+    from gtts import gTTS
+    GTTS_AVAILABLE = True
+except ImportError:
+    print("[WARNING] gtts not available - TTS features may be limited")
+    GTTS_AVAILABLE = False
+    gTTS = None
 
 import sys
 import platform
@@ -520,8 +528,13 @@ class OCRScreenReader:
         if self.ultra_low_power:
             print("[TTS ultra-low-power] {}".format(text))
             return
+        
+        # Check if gTTS is available
+        if not GTTS_AVAILABLE:
+            print("[TTS fallback - gTTS not available] {}".format(text))
+            return
+            
         try:
-            from gtts import gTTS
             import tempfile
             if 'pygame' in globals() and pygame:
                 import pygame
