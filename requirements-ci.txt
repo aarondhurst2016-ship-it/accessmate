@@ -1,6 +1,5 @@
 # Minimal requirements for CI builds - Essential dependencies only
-# Core GUI framework
-tkinter; sys_platform == "win32"
+# Note: tkinter is built into Python, don't install via pip
 
 # Essential audio/TTS (with fallbacks)
 pyttsx3>=2.90
@@ -8,7 +7,6 @@ gtts>=2.2.0
 
 # HTTP requests and basic functionality  
 requests>=2.25.0
-urllib3>=1.26.0
 
 # Image processing
 pillow>=8.0.0
