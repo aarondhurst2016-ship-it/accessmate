@@ -35,7 +35,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    version='C:\\Users\\aaron\\AppData\\Local\\Temp\\tmp01gukfi_.txt',
+    version='C:\\Users\\aaron\\AppData\\Local\\Temp\\tmpf7szejo9.txt',
     uac_admin=True,
-    icon=['C:\\Users\\aaron\\accessmate\\src\\accessmate_logo_multisize.ico'],
+    icon=['C:\\Users\\aaron\\accessmate\\src\\accessmate_logo.ico'],
 )

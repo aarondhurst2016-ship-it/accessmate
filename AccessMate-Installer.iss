@@ -16,7 +16,7 @@ InfoBeforeFile=README.md
 InfoAfterFile=SUPPORT.md
 OutputDir=dist\installers
 OutputBaseFilename=AccessMate-Setup-v1.0.0-Windows
-SetupIconFile=src\accessmate_logo_multisize.ico
+SetupIconFile=src\accessmate_logo.ico
 Compression=lzma2/ultra64
 SolidCompression=yes
 InternalCompressLevel=ultra64
@@ -48,7 +48,6 @@ Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
-Name: "chinese"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkedonce
@@ -89,23 +88,20 @@ Source: "user_settings.json"; DestDir: "{app}"; Flags: ignoreversion; Components
 Source: "support_messages.json"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 
 ; Icons and resources
-Source: "src\accessmate_logo_multisize.ico"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+Source: "src\accessmate_logo.ico"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 
 [Icons]
 ; Start Menu icons
-Name: "{group}\AccessMate"; Filename: "{app}\AccessMate.exe"; WorkingDir: "{app}"; IconFilename: "{app}\accessmate_logo_multisize.ico"; Comment: "Launch AccessMate Accessibility Assistant"; Tasks: startmenuicon
+Name: "{group}\AccessMate"; Filename: "{app}\AccessMate.exe"; WorkingDir: "{app}"; IconFilename: "{app}\accessmate_logo.ico"; Comment: "Launch AccessMate Accessibility Assistant"; Tasks: startmenuicon
 Name: "{group}\AccessMate Documentation"; Filename: "{app}\README.md"; Comment: "View AccessMate Documentation"; Components: docs; Tasks: startmenuicon
 Name: "{group}\AccessMate Support"; Filename: "{app}\SUPPORT.md"; Comment: "Get AccessMate Support"; Components: docs; Tasks: startmenuicon
 Name: "{group}\{cm:UninstallProgram,AccessMate}"; Filename: "{uninstallexe}"; Comment: "Uninstall AccessMate"; Tasks: startmenuicon
 
 ; Desktop icon
-Name: "{autodesktop}\AccessMate"; Filename: "{app}\AccessMate.exe"; WorkingDir: "{app}"; IconFilename: "{app}\accessmate_logo_multisize.ico"; Comment: "AccessMate - Accessibility Assistant"; Tasks: desktopicon
+Name: "{autodesktop}\AccessMate"; Filename: "{app}\AccessMate.exe"; WorkingDir: "{app}"; IconFilename: "{app}\accessmate_logo.ico"; Comment: "AccessMate - Accessibility Assistant"; Tasks: desktopicon
 
 ; Quick Launch icon (Windows 7 and earlier)
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\AccessMate"; Filename: "{app}\AccessMate.exe"; WorkingDir: "{app}"; IconFilename: "{app}\accessmate_logo_multisize.ico"; Comment: "AccessMate Quick Launch"; Tasks: quicklaunchicon
-
-; Taskbar pin (Windows 10+) 
-Name: "{userpinned}\AccessMate"; Filename: "{app}\AccessMate.exe"; WorkingDir: "{app}"; IconFilename: "{app}\accessmate_logo_multisize.ico"
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\AccessMate"; Filename: "{app}\AccessMate.exe"; WorkingDir: "{app}"; IconFilename: "{app}\accessmate_logo.ico"; Comment: "AccessMate Quick Launch"; Tasks: quicklaunchicon
 
 [Registry]
 ; File association

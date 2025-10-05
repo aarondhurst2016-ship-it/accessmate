@@ -60,7 +60,7 @@ def build_windows_exe():
     
     # Paths
     main_script = os.path.join(script_dir, "src", "main_desktop.py")
-    icon_path = os.path.join(script_dir, "src", "accessmate_logo_multisize.ico")
+    icon_path = os.path.join(script_dir, "src", "accessmate_logo.ico")
     
     # Verify files exist
     if not os.path.exists(main_script):

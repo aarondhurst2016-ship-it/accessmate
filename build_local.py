@@ -59,7 +59,7 @@ def main():
     # Build executable
     app_name = f"AccessMate-{current_platform.title()}"
     
-    build_cmd = f"pyinstaller --onefile"
+    build_cmd = f"python -m PyInstaller --onefile"
     
     # Platform-specific options
     if current_platform == "windows":
