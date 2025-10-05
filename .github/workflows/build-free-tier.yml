@@ -1,0 +1,54 @@
+name: 🆓 Free Tier Build - Essential Only
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to build'
+        required: true
+        default: 'windows'
+        type: choice
+        options:
+        - windows
+        - linux
+        - all
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  build-essential:
+    runs-on: ${{ github.event.inputs.platform == 'windows' && 'windows-latest' || 'ubuntu-latest' }}
+    timeout-minutes: 10  # Shorter timeout to save minutes
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install minimal dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller pillow requests pyttsx3
+    
+    - name: Create simple build (Windows)
+      if: ${{ github.event.inputs.platform == 'windows' }}
+      run: |
+        Copy-Item "src\main_desktop.py" "src\main.py" -Force
+        pyinstaller --onefile --windowed --name=AccessMate-Windows src/main.py --distpath=dist
+      shell: pwsh
+    
+    - name: Create simple build (Linux)
+      if: ${{ github.event.inputs.platform == 'linux' || github.event.inputs.platform == 'all' }}
+      run: |
+        cp src/main_desktop.py src/main.py
+        pyinstaller --onefile --name=AccessMate-Linux src/main.py --distpath=dist
+      shell: bash
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: AccessMate-${{ runner.os }}-${{ github.run_number }}
+        path: dist/AccessMate*
+        retention-days: 5  # Shorter retention to save space
