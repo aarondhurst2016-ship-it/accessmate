@@ -152,7 +152,7 @@ jobs:
         python setup.py bdist_msi
     
     - name: Upload Windows Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: windows-builds
         path: |
@@ -213,7 +213,7 @@ jobs:
         python-version: ${{ env.PYTHON_VERSION }}
     
     - name: Set up Java
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '17'
@@ -251,7 +251,7 @@ jobs:
         buildozer android release
     
     - name: Upload Android Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: android-builds
         path: |
@@ -334,7 +334,7 @@ jobs:
         cd dist/ios-store && zip -r AccessMate.ipa .
     
     - name: Upload iOS Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ios-builds
         path: |
@@ -388,7 +388,7 @@ jobs:
                  "dist/${{ env.APP_NAME }}-AppStore.pkg"
     
     - name: Upload macOS Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: macos-builds
         path: |
@@ -524,7 +524,7 @@ jobs:
         EOF
     
     - name: Upload Linux Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: linux-builds
         path: |
@@ -542,7 +542,7 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Download all artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
     
     - name: Create Release
       uses: softprops/action-gh-release@v1
