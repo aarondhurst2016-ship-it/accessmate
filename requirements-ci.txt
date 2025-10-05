@@ -1,0 +1,24 @@
+# Minimal requirements for CI builds - Essential dependencies only
+# Core GUI framework
+tkinter; sys_platform == "win32"
+
+# Essential audio/TTS (with fallbacks)
+pyttsx3>=2.90
+gtts>=2.2.0
+
+# HTTP requests and basic functionality  
+requests>=2.25.0
+urllib3>=1.26.0
+
+# Image processing
+pillow>=8.0.0
+
+# Text processing
+beautifulsoup4>=4.9.0
+
+# Optional dependencies that may fail in CI
+# pyaudio  # Requires system audio libraries
+# pygame   # Requires SDL libraries  
+# kivy     # Complex dependency chain
+# sounddevice  # Requires portaudio
+# pywinauto    # Windows-only
