@@ -1,13 +1,6 @@
 name: Build Android APK
 
 on:
-  push:
-    branches: [ main, develop ]
-    paths-ignore:
-      - '*.md'
-      - 'docs/**'
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
       build_type:

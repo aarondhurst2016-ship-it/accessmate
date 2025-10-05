@@ -1,9 +1,12 @@
 name: Build All Platforms - Store Ready
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual build'
+        required: false
+        default: 'Manual build trigger'
 
 env:
   PYTHON_VERSION: '3.11'
