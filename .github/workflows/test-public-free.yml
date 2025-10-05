@@ -1,0 +1,30 @@
+name: 🧪 Test Public Repository - Free Actions
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_message:
+        description: 'Test message'
+        required: false
+        default: 'Testing unlimited free actions for public repo'
+
+jobs:
+  test-free-actions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Test public repo free actions
+      run: |
+        echo "🎉 Testing GitHub Actions on public repository"
+        echo "Repository: ${{ github.repository }}"
+        echo "Is Public: This should work for free!"
+        echo "Message: ${{ github.event.inputs.test_message }}"
+        echo "✅ If you see this, unlimited free actions are working!"
+        
+    - name: Verify no billing restrictions
+      run: |
+        echo "🔍 Checking GitHub Actions environment:"
+        echo "Runner OS: ${{ runner.os }}"
+        echo "Runner Architecture: ${{ runner.arch }}"
+        echo "Workflow: ${{ github.workflow }}"
+        echo "🎯 Public repositories should have unlimited free minutes!"
