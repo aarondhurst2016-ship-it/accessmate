@@ -31,8 +31,23 @@ except ImportError:
     GTTS_AVAILABLE = False
     gTTS = None
 
-import pygame
-import speech_recognition as sr
+# Optional pygame import for audio features
+try:
+    import pygame
+    PYGAME_AVAILABLE = True
+except ImportError:
+    print("[WARNING] pygame not available - some audio features may be limited")
+    PYGAME_AVAILABLE = False
+    pygame = None
+
+# Optional speech recognition import
+try:
+    import speech_recognition as sr
+    SPEECH_RECOGNITION_AVAILABLE = True
+except ImportError:
+    print("[WARNING] speech_recognition not available - voice recognition disabled")
+    SPEECH_RECOGNITION_AVAILABLE = False
+    sr = None
 
 # Microphone selection setting
 
@@ -58,6 +73,9 @@ def select_microphone_gui():
 
 def list_microphones():
     """Returns a list of available microphone names."""
+    if not SPEECH_RECOGNITION_AVAILABLE:
+        print("[INFO] Speech recognition not available, returning empty microphone list")
+        return []
     return sr.Microphone.list_microphone_names()
 
 def speak(text, lang='en'):
@@ -78,12 +96,13 @@ def speak(text, lang='en'):
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tf:
                     temp_filename = tf.name
                 tts.save(temp_filename)
-                pygame.mixer.init()
-                pygame.mixer.music.load(temp_filename)
-                pygame.mixer.music.play()
-                while pygame.mixer.music.get_busy():
-                    pygame.time.Clock().tick(10)
-                pygame.mixer.music.unload()
+                if PYGAME_AVAILABLE:
+                    pygame.mixer.init()
+                    pygame.mixer.music.load(temp_filename)
+                    pygame.mixer.music.play()
+                    while pygame.mixer.music.get_busy():
+                        pygame.time.Clock().tick(10)
+                    pygame.mixer.music.unload()
                 os.remove(temp_filename)
             except Exception:
                 pass
@@ -92,12 +111,15 @@ def speak(text, lang='en'):
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tf:
         temp_filename = tf.name
     tts.save(temp_filename)
-    pygame.mixer.init()
-    pygame.mixer.music.load(temp_filename)
-    pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy():
-        pygame.time.Clock().tick(10)
-    pygame.mixer.music.unload()
+    if PYGAME_AVAILABLE:
+        pygame.mixer.init()
+        pygame.mixer.music.load(temp_filename)
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)
+        pygame.mixer.music.unload()
+    else:
+        print(f"[INFO] Would play TTS audio: {text}")
     os.remove(temp_filename)
 
 
@@ -135,24 +157,32 @@ def listen_and_translate(src_lang, dest_lang):
     return None
 
 def listen(lang='en', timeout=2, phrase_time_limit=3):
+    if not SPEECH_RECOGNITION_AVAILABLE:
+        print("[INFO] Speech recognition not available, returning None")
+        return None
+        
     global selected_mic_index
     recognizer = sr.Recognizer()
     mic_index = selected_mic_index
     print(f"[DEBUG] listen() using mic index: {mic_index}")
-    if mic_index is None:
-        source = sr.Microphone()
-    else:
-        source = sr.Microphone(device_index=mic_index)
-    with source as src:
-        print(f"Listening on mic index {mic_index if mic_index is not None else 'default'}...")
-        audio = recognizer.listen(src, timeout=timeout, phrase_time_limit=phrase_time_limit)
     try:
-        text = recognizer.recognize_google(audio, language=lang)
-        print(f"Recognized: {text}")
-        return text
-    except sr.UnknownValueError:
-        print("Could not understand audio")
-        return None
-    except sr.RequestError as e:
-        print(f"Could not request results; {e}")
+        if mic_index is None:
+            source = sr.Microphone()
+        else:
+            source = sr.Microphone(device_index=mic_index)
+        with source as src:
+            print(f"Listening on mic index {mic_index if mic_index is not None else 'default'}...")
+            audio = recognizer.listen(src, timeout=timeout, phrase_time_limit=phrase_time_limit)
+        try:
+            text = recognizer.recognize_google(audio, language=lang)
+            print(f"Recognized: {text}")
+            return text
+        except sr.UnknownValueError:
+            print("Could not understand audio")
+            return None
+        except sr.RequestError as e:
+            print(f"Could not request results; {e}")
+            return None
+    except Exception as e:
+        print(f"[ERROR] Speech recognition error: {e}")
         return None
